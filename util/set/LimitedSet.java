@@ -15,7 +15,7 @@ import java.util.Vector;
  * thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @param <E> The element type.
  * @see UniqueSet
  * @see Vector
@@ -86,10 +86,19 @@ public class LimitedSet<E> extends UniqueSet<E> {
 		if (e == null)
 			return false;
 		
-		if (!this.contains(e) && set.size() < maxCapacity)
-			return set.add(e);
-		else
+		if (!this.contains(e) && set.size() < maxCapacity) {
+			writeLock.lock();
+			
+			try {
+				return set.add(e);
+			}
+			finally {
+				writeLock.unlock();
+			}
+		}
+		else {
 			return false;
+		}
 	}
 	
 	/**
@@ -122,7 +131,14 @@ public class LimitedSet<E> extends UniqueSet<E> {
 	 * @since 21
 	 */
 	public int maxCapacity() {
-		return maxCapacity;
+		readLock.lock();
+		
+		try {
+			return maxCapacity;
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	/**
@@ -134,14 +150,21 @@ public class LimitedSet<E> extends UniqueSet<E> {
 	 * @since 21
 	 */
 	public synchronized void setMaxCapacity(int maxCapacity) {
-		if (this.maxCapacity != maxCapacity) {
-			this.maxCapacity = maxCapacity;
-			
-			while (this.size() > maxCapacity) {
-				set.removeLast();
+		writeLock.lock();
+		
+		try {
+			if (this.maxCapacity != maxCapacity) {
+				this.maxCapacity = maxCapacity;
+				
+				while (this.size() > maxCapacity) {
+					set.removeLast();
+				}
+				
+				set.ensureCapacity(maxCapacity);
 			}
-			
-			set.ensureCapacity(maxCapacity);
+		}
+		finally {
+			writeLock.unlock();
 		}
 	}
 	

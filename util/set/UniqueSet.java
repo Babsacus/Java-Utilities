@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 /**
  * UniqueSet class is a set of unique values, meaning no duplicate or null values can be
  * contained within a UniqueSet. A UniqueSet does not store elements in any particular
@@ -12,12 +15,25 @@ import java.util.Set;
  * {@link #iterator()} method. UniqueSet implements Set and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @param <E> The element type.
  * @see Set
  * @since 21
  */
 public class UniqueSet<E> implements Set<E> {
+	
+	/**
+	 * A read/write lock used to ensure thread-safety.
+	 */
+	protected final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+	/**
+	 * The read lock from the read/write lock.
+	 */
+	protected final Lock readLock = lock.readLock();
+	/**
+	 * The write lock from the read/write lock.
+	 */
+	protected final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * The Vector backing the UniqueSet.
@@ -56,10 +72,19 @@ public class UniqueSet<E> implements Set<E> {
 		if (e == null)
 			return false;
 		
-		if (!this.contains(e))
-			return set.add(e);
-		else
+		if (!this.contains(e)) {
+			writeLock.lock();
+			
+			try {
+				return set.add(e);
+			}
+			finally {
+				writeLock.unlock();
+			}
+		}
+		else {
 			return false;
+		}
 	}
 	
 	/**
@@ -87,7 +112,14 @@ public class UniqueSet<E> implements Set<E> {
 	
 	@Override
 	public synchronized void clear() {
-		set.clear();
+		writeLock.lock();
+		
+		try {
+			set.clear();
+		}
+		finally {
+			writeLock.unlock();
+		}
 	}
 	
 	@Override
@@ -97,7 +129,14 @@ public class UniqueSet<E> implements Set<E> {
 	
 	@Override
 	public boolean contains(Object o) {
-		return set.contains(o);
+		readLock.lock();
+		
+		try {
+			return set.contains(o);
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
@@ -118,12 +157,26 @@ public class UniqueSet<E> implements Set<E> {
 	
 	@Override
 	public int hashCode() {
-		return set.hashCode();
+		readLock.lock();
+		
+		try {
+			return set.hashCode();
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public boolean isEmpty() {
-		return set.isEmpty();
+		readLock.lock();
+		
+		try {
+			return set.isEmpty();
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -134,43 +187,92 @@ public class UniqueSet<E> implements Set<E> {
 
 	@Override
 	public synchronized boolean remove(Object o) {
-		return set.remove(o);
+		writeLock.lock();
+		
+		try {
+			return set.remove(o);
+		}
+		finally {
+			writeLock.unlock();
+		}
 	}
 	
 	@Override
 	public synchronized boolean removeAll(Collection<?> c) {
-		return set.removeAll(c);
+		writeLock.lock();
+		
+		try {
+			return set.removeAll(c);
+		}
+		finally {
+			writeLock.unlock();
+		}
 	}
 	
 	@Override
 	public synchronized boolean retainAll(Collection<?> c) {
-		return set.retainAll(c);
+		writeLock.lock();
+		
+		try {
+			return set.retainAll(c);
+		}
+		finally {
+			writeLock.unlock();
+		}
 	}
 	
 	@Override
 	public int size() {
-		return set.size();
+		readLock.lock();
+		
+		try {
+			return set.size();
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public Object[] toArray() {
-		return set.toArray();
+		readLock.lock();
+		
+		try {
+			return set.toArray();
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 
 	@Override
 	public <T> T[] toArray(T[] a) {
-		return set.toArray(a);
+		readLock.lock();
+		
+		try {
+			return set.toArray(a);
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public String toString() {
 		String ret = "{ ";
 		
-		for (int i = 0; i < set.size(); ++i) {
-			if (i < set.size() - 1)
-				ret += set.get(i).toString() + " ";
-			else
-				ret += set.get(i).toString() + " }";
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < set.size(); ++i) {
+				if (i < set.size() - 1)
+					ret += set.get(i).toString() + " ";
+				else
+					ret += set.get(i).toString() + " }";
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;

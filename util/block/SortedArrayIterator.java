@@ -11,7 +11,7 @@ import java.util.Iterator;
  * SortedArray. SortedArrayIterator implements Iterator.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @param <E> The SortedArray element type.
  * @see SortedArray
  * @see Iterator

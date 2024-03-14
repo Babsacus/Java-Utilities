@@ -15,7 +15,7 @@ import java.util.Collection;
  * the Block, or a default size for the Block. Block extends Collection.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @param <E> The element type.
  * @see Collection
  * @since 21

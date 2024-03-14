@@ -3,6 +3,9 @@ package babs.mindforge.util.primitivearray;
 import java.util.Collection;
 import java.util.Iterator;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import babs.mindforge.util.ArrayInto;
 
 /**
@@ -11,11 +14,24 @@ import babs.mindforge.util.ArrayInto;
  * implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @see PrimitiveArray
  * @since 21
  */
 public class BooleanArray implements PrimitiveArray {
+	
+	/**
+	 * A read/write lock used to ensure thread-safety.
+	 */
+	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+	/**
+	 * The read lock from the read/write lock.
+	 */
+	private final Lock readLock = lock.readLock();
+	/**
+	 * The write lock from the read/write lock.
+	 */
+	private final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * The boolean array backing the BooleanArray.
@@ -53,9 +69,14 @@ public class BooleanArray implements PrimitiveArray {
 	public Object clone() {
 		BooleanArray ret = new BooleanArray(arr.length);
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				ret.arr[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;
@@ -66,9 +87,16 @@ public class BooleanArray implements PrimitiveArray {
 		if (o == null)
 			return false;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (o.equals(Boolean.valueOf(arr[i])))
-				return true;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (o.equals(Boolean.valueOf(arr[i])))
+					return true;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return false;
@@ -98,9 +126,16 @@ public class BooleanArray implements PrimitiveArray {
 			if (((BooleanArray)o).size() != this.size())
 				return false;
 			
-			for (int i = 0; i < arr.length; ++i) {
-				if (!(((BooleanArray)o).arr[i] == arr[i]))
-					return false;
+			readLock.lock();
+			
+			try {
+				for (int i = 0; i < arr.length; ++i) {
+					if (!(((BooleanArray)o).arr[i] == arr[i]))
+						return false;
+				}
+			}
+			finally {
+				readLock.lock();
 			}
 			
 			return true;
@@ -109,18 +144,49 @@ public class BooleanArray implements PrimitiveArray {
 		return false;
 	}
 	
+	/**
+	 * Converts a byte array into a BooleanArray.
+	 * @param array The byte array to convert.
+	 * @return A BooleanArray containing the byte array.
+	 * @throws NullPointerException Thrown if array is null.
+	 * @since 21
+	 */
+	public static BooleanArray from(byte[] array) 
+			throws NullPointerException {
+		if (array == null)
+			throw new NullPointerException("Cannot convert a null byte array into a BooleanArray.");
+		BooleanArray ret = new BooleanArray(array.length);
+		for (int i = 0; i < array.length; ++i)
+			ret.arr[i] = (array[i] != 0) ? true : false;
+		return ret;
+	}
+	
 	@Override
 	public Boolean get(int index) 
 			throws ArrayIndexOutOfBoundsException {
-		if (index < 0 || index >= arr.length)
+		if (index < 0 || index >= this.size())
 			throw new ArrayIndexOutOfBoundsException("Cannot get value due to index out-of-bounds.");
 		
-		return arr[index];
+		readLock.lock();
+		
+		try {
+			return arr[index];
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return arr.hashCode();
+		readLock.lock();
+		
+		try {
+			return arr.hashCode();
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
@@ -128,9 +194,16 @@ public class BooleanArray implements PrimitiveArray {
 		if (o == null || !(o instanceof Boolean))
 			return -1;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (((Boolean)o).booleanValue() == arr[i])
-				return i;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (((Boolean)o).booleanValue() == arr[i])
+					return i;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return -1;
@@ -146,9 +219,16 @@ public class BooleanArray implements PrimitiveArray {
 		if (o == null || !(o instanceof Boolean))
 			return -1;
 		
-		for (int i = arr.length - 1; i >= 0; --i) {
-			if (((Boolean) o).booleanValue() == arr[i])
-				return i;
+		readLock.lock();
+		
+		try {
+			for (int i = arr.length - 1; i >= 0; --i) {
+				if (((Boolean) o).booleanValue() == arr[i])
+					return i;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return -1;
@@ -157,7 +237,7 @@ public class BooleanArray implements PrimitiveArray {
 	@Override
 	public void set(int index, Object o) 
 			throws ArrayIndexOutOfBoundsException, IllegalArgumentException, NullPointerException {
-		if (index < 0 || index >= arr.length)
+		if (index < 0 || index >= this.size())
 			throw new ArrayIndexOutOfBoundsException("Cannot set value due to index out-of-bounds.");
 		
 		if (o == null)
@@ -166,14 +246,26 @@ public class BooleanArray implements PrimitiveArray {
 		if (!(o instanceof Boolean))
 			throw new IllegalArgumentException("Cannot set BooleanArray value to a non-Boolean object.");
 		
-		synchronized(this) {
+		writeLock.lock();
+		
+		try {
 			arr[index] = ((Boolean)o);
+		}
+		finally {
+			writeLock.unlock();
 		}
 	}
 	
 	@Override
 	public int size() {
-		return arr.length;
+		readLock.lock();
+		
+		try {
+			return arr.length;
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
@@ -184,8 +276,15 @@ public class BooleanArray implements PrimitiveArray {
 		
 		BooleanArray ret = new BooleanArray(end - start);
 		
-		for (int i = start; i < end; ++i)
-			ret.set(i - start, arr[i]);
+		readLock.lock();
+		
+		try {
+			for (int i = start; i < end; ++i)
+				ret.set(i - start, arr[i]);
+		}
+		finally {
+			readLock.unlock();
+		}
 		
 		return ret;
 	}
@@ -198,9 +297,14 @@ public class BooleanArray implements PrimitiveArray {
 	public boolean[] toArray() {
 		boolean[] copy = new boolean[arr.length];
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				copy[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return copy;
@@ -211,9 +315,14 @@ public class BooleanArray implements PrimitiveArray {
 	public <T> T[] toArray(T[] a) {
 		Boolean[] copy = new Boolean[arr.length];
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				copy[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		if (a.length >= copy.length) {
@@ -232,11 +341,18 @@ public class BooleanArray implements PrimitiveArray {
 	public String toString() {
 		String ret = "";
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (i < arr.length - 1)
-				ret += arr[i] + " ";
-			else
-				ret += arr[i];
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (i < arr.length - 1)
+					ret += arr[i] + " ";
+				else
+					ret += arr[i];
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;

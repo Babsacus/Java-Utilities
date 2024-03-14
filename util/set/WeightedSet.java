@@ -19,7 +19,7 @@ import java.util.Iterator;
  * LimitedSet and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @param <E> The element type.
  * @param <N> A Number type.
  * @see LimitedSet
@@ -91,28 +91,35 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	 * @since 21
 	 */
 	@Override
-	public synchronized boolean add(WeightedKey<E> e) {
+	public boolean add(WeightedKey<E> e) {
 		if (e == null)
 			return false;
 		
-		for (int i = 0; i < set.size(); ++i) {
-			if (set.get(i).equals(e)) {
-				set.get(i).update();
-				
-				float max = this.max();
-				
-				for (int j = 0; j < set.size(); ++j)
-					set.get(j).normalize(max);
-				
-				return true;
-			}
-		}
+		writeLock.lock();
 		
-		if (this.size() == maxCapacity) {
-			set.remove(this.minIndex());
-		}
+		try {
+			for (int i = 0; i < set.size(); ++i) {
+				if (set.get(i).equals(e)) {
+					set.get(i).update();
+					
+					float max = this.max();
+					
+					for (int j = 0; j < set.size(); ++j)
+						set.get(j).normalize(max);
+					
+					return true;
+				}
+			}
 			
-		set.add(e);
+			if (this.size() == maxCapacity) {
+				set.remove(this.minIndex());
+			}
+				
+			set.add(e);
+		}
+		finally {
+			writeLock.unlock();
+		}
 		
 		return true;
 	}
@@ -129,28 +136,35 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	 * @return This returns false if e is null, otherwise true.
 	 * @since 21
 	 */
-	public synchronized boolean addKey(E e) {
+	public boolean addKey(E e) {
 		if (e == null)
 			return false;
 		
-		for (int i = 0; i < set.size(); ++i) {
-			if (set.get(i).getKey().equals(e)) {
-				set.get(i).update();
-				
-				float max = this.max();
-				
-				for (int j = 0; j < set.size(); ++j)
-					set.get(j).normalize(max);
-				
-				return true;
-			}
-		}
+		writeLock.lock();
 		
-		if (this.size() == maxCapacity) {
-			set.remove(this.minIndex());
-		}
+		try {
+			for (int i = 0; i < set.size(); ++i) {
+				if (set.get(i).getKey().equals(e)) {
+					set.get(i).update();
+					
+					float max = this.max();
+					
+					for (int j = 0; j < set.size(); ++j)
+						set.get(j).normalize(max);
+					
+					return true;
+				}
+			}
 			
-		set.add(new WeightedKey<E>(e));
+			if (this.size() == maxCapacity) {
+				set.remove(this.minIndex());
+			}
+				
+			set.add(new WeightedKey<E>(e));
+		}
+		finally {
+			writeLock.unlock();
+		}
 		
 		return true;
 	}
@@ -169,7 +183,7 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	 * @since 21
 	 */
 	@Override
-	public synchronized boolean addAll(Collection<? extends WeightedKey<E>> c) {
+	public boolean addAll(Collection<? extends WeightedKey<E>> c) {
 		if (c == null)
 			return false;
 		
@@ -194,7 +208,7 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	 * @return This returns false if c is null, otherwise true.
 	 * @since 21
 	 */
-	public synchronized boolean addAllKeys(Collection<? extends E> c) {
+	public boolean addAllKeys(Collection<? extends E> c) {
 		if (c == null)
 			return false;
 		
@@ -219,9 +233,16 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	 * @since 21
 	 */
 	public boolean containsKey(E e) {
-		for (int i = 0; i < set.size(); ++i) {
-			if (set.get(i).getKey().equals(e))
-				return true;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < set.size(); ++i) {
+				if (set.get(i).getKey().equals(e))
+					return true;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return false;
@@ -264,9 +285,16 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	public float max() {
 		float max = 0.0f;
 		
-		for (int i = 0; i < set.size(); ++i) {
-			if (set.get(i).getValue() > max)
-				max = set.get(i).getValue();
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < set.size(); ++i) {
+				if (set.get(i).getValue() > max)
+					max = set.get(i).getValue();
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return max;
@@ -280,9 +308,16 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	public float min() {
 		float min = 1.0f;
 		
-		for (int i = 0; i < set.size(); ++i) {
-			if (set.get(i).getValue() <= min)
-				min = set.get(i).getValue();
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < set.size(); ++i) {
+				if (set.get(i).getValue() <= min)
+					min = set.get(i).getValue();
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return min;
@@ -297,11 +332,18 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 		float min = 1.0f;
 		int index = 0;
 		
-		for (int i = 0; i < set.size(); ++i) {
-			if (set.get(i).getValue() <= min) {
-				min = set.get(i).getValue();
-				index = i;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < set.size(); ++i) {
+				if (set.get(i).getValue() <= min) {
+					min = set.get(i).getValue();
+					index = i;
+				}
 			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return index;
@@ -313,12 +355,19 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	 * @return True if the specified key was removed, otherwise false.
 	 * @since 21
 	 */
-	public synchronized boolean removeKey(E e) {
-		for (int i = 0; i < set.size(); ++i) {
-			if (set.get(i).getKey().equals(e)) {
-				set.remove(i);
-				return true;
+	public boolean removeKey(E e) {
+		writeLock.lock();
+		
+		try {
+			for (int i = 0; i < set.size(); ++i) {
+				if (set.get(i).getKey().equals(e)) {
+					set.remove(i);
+					return true;
+				}
 			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return false;
@@ -331,7 +380,7 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	 * @return True if this WeightedSet is changed after this method call.
 	 * @since 21
 	 */
-	public synchronized boolean removeAllKeys(Collection<E> c) {
+	public boolean removeAllKeys(Collection<E> c) {
 		Iterator<E> it = c.iterator();
 		boolean ret = false;
 		
@@ -343,8 +392,15 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	}
 	
 	@Override
-	public synchronized boolean removeAll(Collection<?> c) {
-		return set.removeAll(c);
+	public boolean removeAll(Collection<?> c) {
+		writeLock.lock();
+		
+		try {
+			return set.removeAll(c);
+		}
+		finally {
+			writeLock.unlock();
+		}
 	}
 	
 	/**
@@ -355,14 +411,21 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 	 * @return True if this WeightedSet is changed after this method call.
 	 * @since 21
 	 */
-	public synchronized boolean retainAllKeys(Collection<E> c) {
+	public boolean retainAllKeys(Collection<E> c) {
 		boolean ret = false;
 		
-		for (int i = set.size() - 1; i >= 0; --i) {
-			if (!c.contains(set.get(i).getKey())) {
-				set.remove(i);
-				ret = true;
+		writeLock.lock();
+		
+		try {
+			for (int i = set.size() - 1; i >= 0; --i) {
+				if (!c.contains(set.get(i).getKey())) {
+					set.remove(i);
+					ret = true;
+				}
 			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return ret;

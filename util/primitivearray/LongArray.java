@@ -3,6 +3,9 @@ package babs.mindforge.util.primitivearray;
 import java.util.Collection;
 import java.util.Iterator;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import babs.mindforge.util.ArrayInto;
 
 /**
@@ -11,11 +14,24 @@ import babs.mindforge.util.ArrayInto;
  * implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @see PrimitiveArray
  * @since 21
  */
 public class LongArray implements PrimitiveArray {
+	
+	/**
+	 * A read/write lock used to ensure thread-safety.
+	 */
+	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+	/**
+	 * The read lock from the read/write lock.
+	 */
+	private final Lock readLock = lock.readLock();
+	/**
+	 * The write lock from the read/write lock.
+	 */
+	private final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * The long array backing the LongArray.
@@ -53,9 +69,14 @@ public class LongArray implements PrimitiveArray {
 	public Object clone() {
 		LongArray ret = new LongArray(arr.length);
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				ret.arr[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;
@@ -66,9 +87,16 @@ public class LongArray implements PrimitiveArray {
 		if (o == null)
 			return false;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (o.equals(Long.valueOf(arr[i])))
-				return true;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (o.equals(Long.valueOf(arr[i])))
+					return true;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return false;
@@ -98,9 +126,16 @@ public class LongArray implements PrimitiveArray {
 			if (((LongArray)o).size() != this.size())
 				return false;
 			
-			for (int i = 0; i < arr.length; ++i) {
-				if (!(((LongArray)o).arr[i] == arr[i]))
-					return false;
+			readLock.lock();
+			
+			try {
+				for (int i = 0; i < arr.length; ++i) {
+					if (!(((LongArray)o).arr[i] == arr[i]))
+						return false;
+				}
+			}
+			finally {
+				readLock.lock();
 			}
 			
 			return true;
@@ -109,18 +144,57 @@ public class LongArray implements PrimitiveArray {
 		return false;
 	}
 	
+	/**
+	 * Converts a byte array into a LongArray.
+	 * @param array The byte array to convert.
+	 * @return A LongArray containing the byte array.
+	 * @throws IllegalArgumentException Thrown if array's length is not evenly 
+	 * divisible by {@link Long#BYTES}.
+	 * @throws NullPointerException Thrown if array is null.
+	 * @since 21
+	 */
+	public static LongArray from(byte[] array) 
+			throws NullPointerException {
+		if (array == null)
+			throw new NullPointerException("Cannot convert a null byte array into a LongArray.");
+		if (array.length % Long.BYTES != 0)
+			throw new IllegalArgumentException("Byte array size is incompatible with long size.");
+		LongArray ret = new LongArray(array.length / Long.BYTES);
+		for (int i = 0; i < array.length / Long.BYTES; ++i) {
+			long v = 0;
+			for (int j = 0; j < Long.BYTES; ++j)
+				v |= (array[j + (i * Long.BYTES)] << (Byte.SIZE * (Long.BYTES - 1 - j)));
+			ret.set(i, v);
+		}
+		return ret;
+	}
+	
 	@Override
 	public Long get(int index) 
 			throws ArrayIndexOutOfBoundsException {
-		if (index < 0 || index >= arr.length)
+		if (index < 0 || index >= this.size())
 			throw new ArrayIndexOutOfBoundsException("Cannot get value due to index out-of-bounds.");
 		
-		return arr[index];
+		readLock.lock();
+		
+		try {
+			return arr[index];
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return arr.hashCode();
+		readLock.lock();
+		
+		try {
+			return arr.hashCode();
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
@@ -128,9 +202,16 @@ public class LongArray implements PrimitiveArray {
 		if (o == null || !(o instanceof Long))
 			return -1;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (((Long)o).longValue() == arr[i])
-				return i;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (((Long)o).longValue() == arr[i])
+					return i;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return -1;
@@ -146,9 +227,16 @@ public class LongArray implements PrimitiveArray {
 		if (o == null || !(o instanceof Long))
 			return -1;
 		
-		for (int i = arr.length - 1; i >= 0; --i) {
-			if (((Long) o).longValue() == arr[i])
-				return i;
+		readLock.lock();
+		
+		try {
+			for (int i = arr.length - 1; i >= 0; --i) {
+				if (((Long) o).longValue() == arr[i])
+					return i;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return -1;
@@ -157,7 +245,7 @@ public class LongArray implements PrimitiveArray {
 	@Override
 	public void set(int index, Object o) 
 			throws ArrayIndexOutOfBoundsException, IllegalArgumentException, NullPointerException {
-		if (index < 0 || index >= arr.length)
+		if (index < 0 || index >= this.size())
 			throw new ArrayIndexOutOfBoundsException("Cannot set value due to index out-of-bounds.");
 		
 		if (o == null)
@@ -166,14 +254,26 @@ public class LongArray implements PrimitiveArray {
 		if (!(o instanceof Long))
 			throw new IllegalArgumentException("Cannot set LongArray value to a non-Long object.");
 		
-		synchronized(this) {
+		writeLock.lock();
+		
+		try {
 			arr[index] = ((Long)o);
+		}
+		finally {
+			writeLock.unlock();
 		}
 	}
 	
 	@Override
 	public int size() {
-		return arr.length;
+		readLock.lock();
+		
+		try {
+			return arr.length;
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
@@ -184,8 +284,15 @@ public class LongArray implements PrimitiveArray {
 		
 		LongArray ret = new LongArray(end - start);
 		
-		for (int i = start; i < end; ++i)
-			ret.set(i - start, arr[i]);
+		readLock.lock();
+		
+		try {
+			for (int i = start; i < end; ++i)
+				ret.set(i - start, arr[i]);
+		}
+		finally {
+			readLock.unlock();
+		}
 		
 		return ret;
 	}
@@ -198,9 +305,14 @@ public class LongArray implements PrimitiveArray {
 	public long[] toArray() {
 		long[] copy = new long[arr.length];
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				copy[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return copy;
@@ -211,9 +323,14 @@ public class LongArray implements PrimitiveArray {
 	public <T> T[] toArray(T[] a) {
 		Long[] copy = new Long[arr.length];
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				copy[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		if (a.length >= copy.length) {
@@ -232,11 +349,18 @@ public class LongArray implements PrimitiveArray {
 	public String toString() {
 		String ret = "";
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (i < arr.length - 1)
-				ret += arr[i] + " ";
-			else
-				ret += arr[i];
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (i < arr.length - 1)
+					ret += arr[i] + " ";
+				else
+					ret += arr[i];
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;

@@ -2,6 +2,9 @@ package babs.mindforge.util.set;
 
 import java.util.Map.Entry;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 /**
  * WeightedKey class represents a key value that has a weight value associated with it.
  * The weight value in a WeightedKey has an {@link #update(float)} method and a {@link 
@@ -10,12 +13,25 @@ import java.util.Map.Entry;
  * thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @param <E> The key type.
  * @see WeightedSet
  * @since 21
  */
 public class WeightedKey<E> implements Entry<E, Float> {
+	
+	/**
+	 * A read/write lock used to ensure thread-safety.
+	 */
+	protected final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+	/**
+	 * The read lock from the read/write lock.
+	 */
+	protected final Lock readLock = lock.readLock();
+	/**
+	 * The write lock from the read/write lock.
+	 */
+	protected final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * The key value.
@@ -61,17 +77,38 @@ public class WeightedKey<E> implements Entry<E, Float> {
 
 	@Override
 	public E getKey() {
-		return key;
+		readLock.lock();
+		
+		try {
+			return key;
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 
 	@Override
 	public Float getValue() {
-		return value;
+		readLock.lock();
+		
+		try {
+			return value;
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return key.hashCode() + (((Float)value).hashCode() << 1);
+		readLock.lock();
+		
+		try {
+			return key.hashCode() + (((Float)value).hashCode() << 1);
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	/**
@@ -83,23 +120,44 @@ public class WeightedKey<E> implements Entry<E, Float> {
 	 * @see WeightSet
 	 * @since 21
 	 */
-	public synchronized Float normalize(float max) {
-		if (max > 0.0f)
-			value /= max;
+	public Float normalize(float max) {
+		writeLock.lock();
 		
-		return value;
+		try {
+			if (max > 0.0f)
+				value /= max;
+			
+			return value;
+		}
+		finally {
+			writeLock.unlock();
+		}
 	}
 
 	@Override
-	public synchronized Float setValue(Float value) {
-		Float ret = value;
-		this.value = value;
-		return ret;
+	public Float setValue(Float value) {
+		writeLock.lock();
+		
+		try {
+			Float ret = value;
+			this.value = value;
+			return ret;
+		}
+		finally {
+			writeLock.unlock();
+		}
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("(%s, %f)", key.toString(), value);
+		readLock.lock();
+		
+		try {
+			return String.format("(%s, %f)", key.toString(), value);
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	/**
@@ -107,9 +165,16 @@ public class WeightedKey<E> implements Entry<E, Float> {
 	 * @return The updated weight value.
 	 * @since 21
 	 */
-	public synchronized Float update() {
-		value += 1.0f;
-		return value;
+	public Float update() {
+		writeLock.lock();
+		
+		try {
+			value += 1.0f;
+			return value;
+		}
+		finally {
+			writeLock.unlock();
+		}
 	}
 
 }

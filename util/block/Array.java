@@ -3,6 +3,9 @@ package babs.mindforge.util.block;
 import java.util.Collection;
 import java.util.Iterator;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import babs.mindforge.util.ArrayInto;
 
 /**
@@ -19,12 +22,25 @@ import babs.mindforge.util.ArrayInto;
  * Block and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @param <E> The element type.
  * @see Block
  * @since 21
  */
 public class Array<E> implements Block<E> {
+	
+	/**
+	 * A read/write lock used to ensure thread-safety.
+	 */
+	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+	/**
+	 * The read lock from the read/write lock.
+	 */
+	private final Lock readLock = lock.readLock();
+	/**
+	 * The write lock from the read/write lock.
+	 */
+	private final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * The array backing the Array class.
@@ -71,18 +87,15 @@ public class Array<E> implements Block<E> {
 			throws NullPointerException {
 		if (e == null)
 			throw new NullPointerException("Cannot add a null element to the Array.");
-		
-		Object[] copy = new Object[arr.length];
-		
-		synchronized(this) {
-			for (int i = 0; i < arr.length; ++i)
-				copy[i] = arr[i];
-		}
-		
-		for (int i = 0; i < copy.length; ++i) {
-			if (copy[i] == null) {
-				synchronized(this) {
+
+		for (int i = 0; i < arr.length; ++i) {
+			if (arr[i] == null) {
+				writeLock.lock();
+				try {
 					arr[i] = e;
+				}
+				finally {
+					writeLock.unlock();
 				}
 				return true;
 			}
@@ -118,9 +131,13 @@ public class Array<E> implements Block<E> {
 	 */
 	@Override
 	public void clear() {
-		synchronized(this) {
+		writeLock.lock();
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				arr[i] = null;
+		}
+		finally {
+			writeLock.unlock();
 		}
 	}
 	
@@ -128,9 +145,14 @@ public class Array<E> implements Block<E> {
 	public Object clone() {
 		Array<E> ret = new Array<E>(arr.length);
 		
-		synchronized(this) {
+		readLock.lock();
+
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				ret.arr[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;
@@ -141,9 +163,16 @@ public class Array<E> implements Block<E> {
 		if (o == null)
 			return false;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (arr[i].equals(o))
-				return true;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (arr[i].equals(o))
+					return true;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return false;
@@ -169,10 +198,17 @@ public class Array<E> implements Block<E> {
 		if (o instanceof Array<?>) {
 			if (((Array<?>)o).size() != this.size())
 				return false;
+				
+			readLock.lock();
 			
-			for (int i = 0; i < arr.length; ++i) {
-				if (!((Array<?>)o).arr[i].equals(arr[i]))
-					return false;
+			try {
+				for (int i = 0; i < arr.length; ++i) {
+					if (!((Array<?>)o).arr[i].equals(arr[i]))
+						return false;
+				}
+			}
+			finally {
+				readLock.unlock();
 			}
 			
 			return true;
@@ -197,12 +233,26 @@ public class Array<E> implements Block<E> {
 		if (index < 0 || index >= this.sizeUsed() || index >= this.size())
 			throw new ArrayIndexOutOfBoundsException("Cannot set Array value due to out-of-bounds index.");
 		
-		return (E)arr[index];
+		readLock.lock();
+		
+		try {
+			return (E)arr[index];
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return arr.hashCode();
+		readLock.lock();
+		
+		try {
+			return arr.hashCode();
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
@@ -210,9 +260,16 @@ public class Array<E> implements Block<E> {
 		if (e == null)
 			return -1;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (arr[i].equals(e))
-				return i;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (arr[i].equals(e))
+					return i;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return -1;
@@ -225,9 +282,16 @@ public class Array<E> implements Block<E> {
 	 */
 	@Override
 	public boolean isEmpty() {
-		for (int i = 0; i < arr.length; ++i) {
-			if (arr[i] != null)
-				return false;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (arr[i] != null)
+					return false;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return true;
@@ -258,9 +322,16 @@ public class Array<E> implements Block<E> {
 		if (e == null)
 			return -1;
 		
-		for (int i = arr.length - 1; i >= 0; --i) {
-			if (arr[i].equals(e))
-				return i;
+		readLock.lock();
+		
+		try {
+			for (int i = arr.length - 1; i >= 0; --i) {
+				if (arr[i].equals(e))
+					return i;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return -1;
@@ -282,28 +353,20 @@ public class Array<E> implements Block<E> {
 		if (index < 0 || index >= this.sizeUsed())
 			throw new ArrayIndexOutOfBoundsException("Cannot remove element at index due to out-of-bounds index.");
 		
-		Object[] copy = new Object[arr.length];
-		E ret = null;
+		writeLock.lock();
 		
-		synchronized(this) {
-			for (int i = 0; i < arr.length; ++i)
-				copy[i] = arr[i];
-		}
+		try {
+			E ret = (E)arr[index];
+			arr[index] = null;
 		
-		ret = (E)copy[index];
-		copy[index] = null;
-		
-		for (int j = index; j < copy.length - 1; ++j)
-			copy[j] = copy[j + 1];
-		
-		copy[copy.length - 1] = null;
-		
-		synchronized(this) {
 			for (int j = 0; j < arr.length; ++j)
-				arr[j] = copy[j];
+				arr[j] = arr[j + 1];
+			
+			return ret;
 		}
-		
-		return ret;
+		finally {
+			writeLock.unlock();
+		}
 	}
 	
 	/**
@@ -316,29 +379,24 @@ public class Array<E> implements Block<E> {
 	 */
 	@Override
 	public boolean remove(Object o) {
-		Object[] copy = new Object[arr.length];
-		
-		synchronized(this) {
-			for (int i = 0; i < arr.length; ++i)
-				copy[i] = arr[i];
-		}
-		
-		for (int i = 0; i < copy.length; ++i) {
-			if (copy[i].equals(o)) {
-				copy[i] = null;
-				
-				for (int j = i; j < copy.length - 1; ++j)
-					copy[j] = copy[j + 1];
-				
-				copy[copy.length - 1] = null;
-				
-				synchronized(this) {
-					for (int j = 0; j < arr.length; ++j)
-						arr[i] = copy[i];
+		writeLock.lock();
+
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (arr[i].equals(o)) {
+					arr[i] = null;
+					
+					for (int j = i; j < arr.length - 1; ++j)
+						arr[j] = arr[j + 1];
+					
+					arr[arr.length - 1] = null;
+					
+					return true;
 				}
-				
-				return true;
 			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return false;
@@ -365,30 +423,26 @@ public class Array<E> implements Block<E> {
 	
 	@Override
 	public boolean removeAny(Object o) {
-		Object[] copy = new Object[arr.length];
 		boolean ret = false;
 		
-		synchronized(this) {
-			for (int i = 0; i < arr.length; ++i)
-				copy[i] = arr[i];
-		}
+		writeLock.lock();
 		
-		for (int i = 0; i < copy.length; ++i) {
-			if (copy[i].equals(o)) {
-				copy[i] = null;
-				
-				for (int j = i; j < copy.length - 1; ++j)
-					copy[j] = copy[j + 1];
-				
-				copy[copy.length - 1] = null;
-				
-				synchronized(this) {
-					for (int j = 0; j < arr.length; ++j)
-						arr[i] = copy[i];
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (arr[i].equals(o)) {
+					arr[i] = null;
+					
+					for (int j = i; j < arr.length - 1; ++j)
+						arr[j] = arr[j + 1];
+					
+					arr[arr.length - 1] = null;
+					
+					ret = true;
 				}
-				
-				ret = true;
 			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return ret;
@@ -404,29 +458,24 @@ public class Array<E> implements Block<E> {
 	 */
 	@Override
 	public boolean removeLast(Object o) {
-		Object[] copy = new Object[arr.length];
+		writeLock.lock();
 		
-		synchronized(this) {
-			for (int i = 0; i < arr.length; ++i)
-				copy[i] = arr[i];
-		}
-		
-		for (int i = copy.length - 1; i >= 0; --i) {
-			if (copy[i].equals(o)) {
-				copy[i] = null;
-				
-				for (int j = i; j < copy.length - 1; ++j)
-					copy[j] = copy[j + 1];
-				
-				copy[copy.length - 1] = null;
-				
-				synchronized(this) {
-					for (int j = 0; j < arr.length; ++j)
-						arr[i] = copy[i];
+		try {
+			for (int i = arr.length - 1; i >= 0; --i) {
+				if (arr[i].equals(o)) {
+					arr[i] = null;
+					
+					for (int j = i; j < arr.length - 1; ++j)
+						arr[j] = arr[j + 1];
+					
+					arr[arr.length - 1] = null;
+					
+					return true;
 				}
-				
-				return true;
 			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return false;
@@ -436,13 +485,18 @@ public class Array<E> implements Block<E> {
 	public boolean retainAll(Collection<?> c) {
 		boolean ret = false;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (!c.contains(arr[i])) {
-				synchronized(this) {
+		writeLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (!c.contains(arr[i])) {
 					arr[i] = null;
+					ret = true;
 				}
-				ret = true;
 			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return ret;
@@ -465,8 +519,13 @@ public class Array<E> implements Block<E> {
 		if (e == null)
 			throw new NullPointerException("Cannot set Array value to a null value.");
 		
-		synchronized(this) {
+		writeLock.lock();
+		
+		try {
 			arr[index] = e;
+		}
+		finally {
+			writeLock.unlock();
 		}
 	}
 	
@@ -478,16 +537,30 @@ public class Array<E> implements Block<E> {
 	 */
 	@Override
 	public int size() {
-		return arr.length;
+		readLock.lock();
+		
+		try {
+			return arr.length;
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public int sizeUnused() {
 		int ret = 0;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (arr[i] == null)
-				ret++;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (arr[i] == null)
+					ret++;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;
@@ -497,9 +570,16 @@ public class Array<E> implements Block<E> {
 	public int sizeUsed() {
 		int ret = 0;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (arr[i] != null)
-				ret++;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (arr[i] != null)
+					ret++;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;
@@ -533,9 +613,14 @@ public class Array<E> implements Block<E> {
 	public Object[] toArray() {
 		Object[] copy = new Object[arr.length];
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				copy[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return copy;
@@ -546,9 +631,14 @@ public class Array<E> implements Block<E> {
 	public <T> T[] toArray(T[] a) {
 		Object[] copy = new Object[arr.length];
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				copy[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		if (a.length >= copy.length) {
@@ -567,11 +657,18 @@ public class Array<E> implements Block<E> {
 	public String toString() {
 		String ret = "";
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (i < arr.length - 1)
-				ret += arr[i].toString() + " ";
-			else
-				ret += arr[i].toString();
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (i < arr.length - 1)
+					ret += arr[i].toString() + " ";
+				else
+					ret += arr[i].toString();
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;

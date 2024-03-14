@@ -3,6 +3,9 @@ package babs.mindforge.util.primitivearray;
 import java.util.Collection;
 import java.util.Iterator;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import babs.mindforge.util.ArrayInto;
 
 /**
@@ -11,11 +14,24 @@ import babs.mindforge.util.ArrayInto;
  * implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.0.2
  * @see PrimitiveArray
  * @since 21
  */
 public class IntegerArray implements PrimitiveArray {
+	
+	/**
+	 * A read/write lock used to ensure thread-safety.
+	 */
+	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+	/**
+	 * The read lock from the read/write lock.
+	 */
+	private final Lock readLock = lock.readLock();
+	/**
+	 * The write lock from the read/write lock.
+	 */
+	private final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * The int array backing the IntegerArray.
@@ -53,9 +69,14 @@ public class IntegerArray implements PrimitiveArray {
 	public Object clone() {
 		IntegerArray ret = new IntegerArray(arr.length);
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				ret.arr[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;
@@ -66,9 +87,16 @@ public class IntegerArray implements PrimitiveArray {
 		if (o == null)
 			return false;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (o.equals(Integer.valueOf(arr[i])))
-				return true;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (o.equals(Integer.valueOf(arr[i])))
+					return true;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return false;
@@ -98,9 +126,16 @@ public class IntegerArray implements PrimitiveArray {
 			if (((IntegerArray)o).size() != this.size())
 				return false;
 			
-			for (int i = 0; i < arr.length; ++i) {
-				if (!(((IntegerArray)o).arr[i] == arr[i]))
-					return false;
+			readLock.lock();
+			
+			try {
+				for (int i = 0; i < arr.length; ++i) {
+					if (!(((IntegerArray)o).arr[i] == arr[i]))
+						return false;
+				}
+			}
+			finally {
+				readLock.lock();
 			}
 			
 			return true;
@@ -109,18 +144,57 @@ public class IntegerArray implements PrimitiveArray {
 		return false;
 	}
 	
+	/**
+	 * Converts a byte array into a IntegerArray.
+	 * @param array The byte array to convert.
+	 * @return A IntegerArray containing the byte array.
+	 * @throws IllegalArgumentException Thrown if array's length is not evenly 
+	 * divisible by {@link Integer#BYTES}.
+	 * @throws NullPointerException Thrown if array is null.
+	 * @since 21
+	 */
+	public static IntegerArray from(byte[] array) 
+			throws NullPointerException {
+		if (array == null)
+			throw new NullPointerException("Cannot convert a null byte array into a IntegerArray.");
+		if (array.length % Integer.BYTES != 0)
+			throw new IllegalArgumentException("Byte array size is incompatible with int size.");
+		IntegerArray ret = new IntegerArray(array.length / Integer.BYTES);
+		for (int i = 0; i < array.length / Integer.BYTES; ++i) {
+			int v = 0;
+			for (int j = 0; j < Integer.BYTES; ++j)
+				v |= (array[j + (i * Integer.BYTES)] << (Byte.SIZE * (Integer.BYTES - 1 - j)));
+			ret.set(i, v);
+		}
+		return ret;
+	}
+	
 	@Override
 	public Integer get(int index) 
 			throws ArrayIndexOutOfBoundsException {
-		if (index < 0 || index >= arr.length)
+		if (index < 0 || index >= this.size())
 			throw new ArrayIndexOutOfBoundsException("Cannot get value due to index out-of-bounds.");
 		
-		return arr[index];
+		readLock.lock();
+		
+		try {
+			return arr[index];
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return arr.hashCode();
+		readLock.lock();
+		
+		try {
+			return arr.hashCode();
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
@@ -128,9 +202,16 @@ public class IntegerArray implements PrimitiveArray {
 		if (o == null || !(o instanceof Integer))
 			return -1;
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (((Integer)o).intValue() == arr[i])
-				return i;
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (((Integer)o).intValue() == arr[i])
+					return i;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return -1;
@@ -146,9 +227,16 @@ public class IntegerArray implements PrimitiveArray {
 		if (o == null || !(o instanceof Integer))
 			return -1;
 		
-		for (int i = arr.length - 1; i >= 0; --i) {
-			if (((Integer) o).intValue() == arr[i])
-				return i;
+		readLock.lock();
+		
+		try {
+			for (int i = arr.length - 1; i >= 0; --i) {
+				if (((Integer) o).intValue() == arr[i])
+					return i;
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return -1;
@@ -157,7 +245,7 @@ public class IntegerArray implements PrimitiveArray {
 	@Override
 	public void set(int index, Object o) 
 			throws ArrayIndexOutOfBoundsException, IllegalArgumentException, NullPointerException {
-		if (index < 0 || index >= arr.length)
+		if (index < 0 || index >= this.size())
 			throw new ArrayIndexOutOfBoundsException("Cannot set value due to index out-of-bounds.");
 		
 		if (o == null)
@@ -166,14 +254,26 @@ public class IntegerArray implements PrimitiveArray {
 		if (!(o instanceof Integer))
 			throw new IllegalArgumentException("Cannot set IntegerArray value to a non-Integer object.");
 		
-		synchronized(this) {
+		writeLock.lock();
+		
+		try {
 			arr[index] = ((Integer)o);
+		}
+		finally {
+			writeLock.unlock();
 		}
 	}
 	
 	@Override
 	public int size() {
-		return arr.length;
+		readLock.lock();
+		
+		try {
+			return arr.length;
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	@Override
@@ -184,8 +284,15 @@ public class IntegerArray implements PrimitiveArray {
 		
 		IntegerArray ret = new IntegerArray(end - start);
 		
-		for (int i = start; i < end; ++i)
-			ret.set(i - start, arr[i]);
+		readLock.lock();
+		
+		try {
+			for (int i = start; i < end; ++i)
+				ret.set(i - start, arr[i]);
+		}
+		finally {
+			readLock.unlock();
+		}
 		
 		return ret;
 	}
@@ -198,9 +305,14 @@ public class IntegerArray implements PrimitiveArray {
 	public int[] toArray() {
 		int[] copy = new int[arr.length];
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				copy[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return copy;
@@ -211,9 +323,14 @@ public class IntegerArray implements PrimitiveArray {
 	public <T> T[] toArray(T[] a) {
 		Integer[] copy = new Integer[arr.length];
 		
-		synchronized(this) {
+		readLock.lock();
+		
+		try {
 			for (int i = 0; i < arr.length; ++i)
 				copy[i] = arr[i];
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		if (a.length >= copy.length) {
@@ -232,11 +349,18 @@ public class IntegerArray implements PrimitiveArray {
 	public String toString() {
 		String ret = "";
 		
-		for (int i = 0; i < arr.length; ++i) {
-			if (i < arr.length - 1)
-				ret += arr[i] + " ";
-			else
-				ret += arr[i];
+		readLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (i < arr.length - 1)
+					ret += arr[i] + " ";
+				else
+					ret += arr[i];
+			}
+		}
+		finally {
+			readLock.unlock();
 		}
 		
 		return ret;
