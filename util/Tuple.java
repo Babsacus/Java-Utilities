@@ -1,17 +1,20 @@
 package babs.mindforge.util;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
- * Tuple class represents a group of 1 or more Objects. The Objects can be of any type and can be
- * null. This class is simply of storage container for different Objects. Once a Tuple is created,
- * it cannot have Objects added or removed. Objects in the Tuple are stored in the order they
- * were specified and can be accessed through their index value. There is also a {@link 
- * #getAs(Class, int)} method that can attempt to return the desired Object cast as the desired 
- * class. If the cast fails, null is returned instead. Tuples are thread-safe.
+ * Tuple class represents a group of immutable Objects. The Objects can be of any type and can 
+ * be null. This class is simply of storage container for different Objects. Once a Tuple is 
+ * created, it cannot have Objects added or removed. Objects in the Tuple are stored in the 
+ * order they were specified and can be accessed through their index value. There is also a 
+ * {@link #getAs(Class, int)} method that can attempt to return the desired Object cast as the 
+ * desired class. If the cast fails, null is returned instead. Objects can be added or removed 
+ * from a Tuple, but these methods return a new Tuple containing the change to the original 
+ * Tuple. The original Tuple remains unchanged. Tuple is thread-safe since they are immutable.
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.1.2
  * @since 21
  */
 public final class Tuple {
@@ -20,13 +23,13 @@ public final class Tuple {
 	 * Vector of objects backing the Tuple.
 	 */
 	private ArrayList<Object> arr;
-
+	
 	/**
-	 * Default constructor that creates a Tuple containing a single null Object.
+	 * Default constructor that creates an empty Tuple.
+	 * @since 21
 	 */
 	public Tuple() {
 		arr = new ArrayList<Object>();
-		arr.add(null);
 	}
 	
 	/**
@@ -40,6 +43,30 @@ public final class Tuple {
 		for (int i = 0; i < objects.length; ++i) {
 			arr.add(objects[i]);
 		}
+	}
+	
+	/**
+	 * Returns a new Tuple containing this Tuple plus the specified Object to add.
+	 * @param o The Object to add.
+	 * @return A Tuple containing this and o.
+	 * @since 21
+	 */
+	public Tuple add(Object o) {
+		Tuple ret = (Tuple)this.clone();
+		ret.arr.add(o);
+		return ret;
+	}
+	
+	/**
+	 * Returns a new Tuple containing this Tuple plus the specified Object to add.
+	 * @param o The Object to add.
+	 * @return A Tuple containing this and o.
+	 * @since 21
+	 */
+	public Tuple addAll(Object ...objects) {
+		Tuple ret = (Tuple)this.clone();
+		ret.arr.addAll(ArrayInto.collection(objects));
+		return ret;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -108,20 +135,82 @@ public final class Tuple {
 	}
 	
 	/**
-	 * Returns true if this Tuple has no Objects or only contains null Objects.
+	 * Returns true if this Tuple contains no Objects.
 	 * @return True if this is empty.
 	 * @since 21
 	 */
 	public boolean isEmpty() {
-		if (arr.isEmpty())
-			return true;
-		
-		for (int i = 0; i < arr.size(); ++i) {
-			if (arr.get(i) != null)
-				return false;
+		return arr.isEmpty();
+	}
+	
+	/**
+	 * Returns an iterator over the elements in the Tuple.
+	 * @return An iterator over this.
+	 * @since 21
+	 */
+	public Iterator<Object> iterator() {
+		return arr.iterator();
+	}
+	
+	/**
+	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This
+	 * removes the first occurrence of the specified Object.
+	 * @param o The Object to remove.
+	 * @return A Tuple containing this without o.
+	 * @since 21
+	 */
+	public Tuple remove(Object o) {
+		Tuple ret = (Tuple)this.clone();
+		ret.arr.remove(o);
+		return ret;
+	}
+	
+	/**
+	 * Returns a new Tuple containing this Tuple minus all the specified Objects. This
+	 * removes any occurrence of each specified Object.
+	 * @param objects The Objects to remove.
+	 * @return A Tuple containing this without objects.
+	 * @since 21
+	 */
+	public Tuple removeAll(Object ...objects) {
+		Tuple ret = (Tuple)this.clone();
+		for (int i = 0; i < objects.length; ++i)
+			ret = ret.removeAny(objects[i]);
+		return ret;
+	}
+	
+	/**
+	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This
+	 * removes any occurrence of the specified Object.
+	 * @param o The Object to remove.
+	 * @return A Tuple containing this without o.
+	 * @since 21
+	 */
+	public Tuple removeAny(Object o) {
+		Tuple ret = (Tuple)this.clone();
+		boolean removed = true;
+		while (removed) {
+			removed = ret.arr.remove(o);
+		};
+		return ret;
+	}
+	
+	/**
+	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This
+	 * removes the last occurrence of the specified Object.
+	 * @param o The Object to remove.
+	 * @return A Tuple containing this without o.
+	 * @since 21
+	 */
+	public Tuple removeLast(Object o) {
+		Tuple ret = (Tuple)this.clone();
+		for (int i = ret.arr.size() - 1; i >= 0; --i) {
+			if (ret.arr.get(i).equals(o)) {
+				ret.arr.remove(i);
+				return ret;
+			}
 		}
-		
-		return true;
+		return ret;
 	}
 	
 	/**
@@ -131,6 +220,37 @@ public final class Tuple {
 	 */
 	public int size() {
 		return arr.size();
+	}
+	
+	/**
+	 * Returns this Tuple as an array.
+	 * @return this Tuple as an array.
+	 * @since 21
+	 */
+	public Object[] toArray() {
+		return arr.toArray();
+	}
+	
+	@Override 
+	public String toString() {
+		String ret = "Tuple: ";
+		
+		if (this.isEmpty()) {
+			ret += "Empty";
+		}
+		else {
+			for (int i = 0; i < arr.size(); ++i) {
+				if (arr.get(i) == null)
+					ret += "null";
+				else
+					ret += arr.get(i).toString();
+				
+				if (i < arr.size() - 1)
+					ret += ", ";
+			}
+		}
+		
+		return ret;
 	}
 	
 }

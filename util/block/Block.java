@@ -15,7 +15,7 @@ import java.util.Collection;
  * the Block, or a default size for the Block. Block extends Collection.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @param <E> The element type.
  * @see Collection
  * @since 21
@@ -95,6 +95,6 @@ public interface Block<E> extends Collection<E> {
 	 * @return A Block containing elements of this from [start, end).
 	 * @since 21
 	 */
-	public Block<E> subBlock(int start, int end);
+	public Block<? extends E> subBlock(int start, int end);
 	
 }

@@ -19,7 +19,7 @@ import java.util.Iterator;
  * LimitedSet and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @param <E> The element type.
  * @param <N> A Number type.
  * @see LimitedSet
@@ -189,8 +189,35 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 		
 		Iterator<? extends WeightedKey<E>> it = c.iterator();
 		
-		while (it.hasNext()) {
-			this.add((WeightedKey<E>)it.next());
+		writeLock.lock();
+		
+		try {
+			while (it.hasNext()) {
+				WeightedKey<E> e = it.next();
+				boolean r = false;
+				
+				for (int i = 0; i < set.size() && r == false; ++i) {
+					if (set.get(i).equals(e)) {
+						set.get(i).update();
+						
+						float max = this.max();
+						
+						for (int j = 0; j < set.size(); ++j)
+							set.get(j).normalize(max);
+						
+						r = true;
+					}
+				}
+				
+				if (this.size() == maxCapacity) {
+					set.remove(this.minIndex());
+				}
+					
+				set.add(e);
+			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return true;
@@ -214,8 +241,35 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 		
 		Iterator<? extends E> it = c.iterator();
 		
-		while (it.hasNext()) {
-			this.addKey((E)it.next());
+		writeLock.lock();
+		
+		try {
+			while (it.hasNext()) {
+				E e = it.next();
+				boolean r = false;
+				
+				for (int i = 0; i < set.size() && r == false; ++i) {
+					if (set.get(i).getKey().equals(e)) {
+						set.get(i).update();
+						
+						float max = this.max();
+						
+						for (int j = 0; j < set.size(); ++j)
+							set.get(j).normalize(max);
+						
+						r = true;
+					}
+				}
+				
+				if (this.size() == maxCapacity) {
+					set.remove(this.minIndex());
+				}
+					
+				set.add(new WeightedKey<E>(e));
+			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return true;
@@ -384,8 +438,23 @@ public class WeightedSet<E> extends LimitedSet<WeightedKey<E>> {
 		Iterator<E> it = c.iterator();
 		boolean ret = false;
 		
-		while (it.hasNext()) {
-			ret |= this.removeKey(it.next());
+		writeLock.lock();
+		
+		try {
+			while (it.hasNext()) {
+				E e = it.next();
+				boolean r = false;
+				
+				for (int i = 0; i < set.size() && r == false; ++i) {
+					if (set.get(i).getKey().equals(e)) {
+						set.remove(i);
+						r = true;
+					}
+				}
+			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return ret;

@@ -22,7 +22,7 @@ import babs.mindforge.util.ArrayInto;
  * Block and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @param <E> The element type.
  * @see Block
  * @since 21
@@ -88,17 +88,18 @@ public class Array<E> implements Block<E> {
 		if (e == null)
 			throw new NullPointerException("Cannot add a null element to the Array.");
 
-		for (int i = 0; i < arr.length; ++i) {
-			if (arr[i] == null) {
-				writeLock.lock();
-				try {
+		writeLock.lock();
+		
+		try {
+			for (int i = 0; i < arr.length; ++i) {
+				if (arr[i] == null) {
 					arr[i] = e;
+					return true;
 				}
-				finally {
-					writeLock.unlock();
-				}
-				return true;
 			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return false;
@@ -116,10 +117,30 @@ public class Array<E> implements Block<E> {
 	public boolean addAll(Collection<? extends E> c) 
 			throws NullPointerException {
 		Iterator<? extends E> it = c.iterator();
-		boolean ret = false;
+		boolean ret = true;
 		
-		while (it.hasNext()) {
-			ret |= this.add(it.next());
+		writeLock.lock();
+		
+		try {
+			while (it.hasNext()) {
+				E e = it.next();
+				boolean r = false;
+				
+				if (e == null)
+					throw new NullPointerException("Cannot add a null element to the Array.");
+	
+				for (int i = 0; i < arr.length && r == false; ++i) {
+					if (arr[i] == null) {
+						arr[i] = e;
+						r = true;
+					}
+				}
+				
+				ret &= r;
+			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return ret;
@@ -167,7 +188,7 @@ public class Array<E> implements Block<E> {
 		
 		try {
 			for (int i = 0; i < arr.length; ++i) {
-				if (arr[i].equals(o))
+				if (arr[i] != null && arr[i].equals(o))
 					return true;
 			}
 		}
@@ -203,8 +224,13 @@ public class Array<E> implements Block<E> {
 			
 			try {
 				for (int i = 0; i < arr.length; ++i) {
-					if (!((Array<?>)o).arr[i].equals(arr[i]))
+					if (((Array<?>)o).arr[i] == null && arr[i] != null) {
 						return false;
+					}
+					else if (((Array<?>)o).arr[i] != null && arr[i] != null) {
+						if ( !((Array<?>)o).arr[i].equals(arr[i]))
+							return false;
+					}
 				}
 			}
 			finally {
@@ -317,6 +343,21 @@ public class Array<E> implements Block<E> {
 		return ret;
 	}
 	
+	/**
+	 * Creates a new Array by joining the two specified arrays in the order that
+	 * they are specified.
+	 * @param <E> The element type.
+	 * @param arr1 The first array/
+	 * @param arr2 The second array.
+	 * @return An Array containing arr1 and arr2 in that order.
+	 */
+	public static <E> Array<E> join(Array<E> arr1, Array<E> arr2) {
+		Array<E> ret = new Array<E>(arr1.sizeUsed() + arr2.sizeUsed());
+		ret.addAll(arr1);
+		ret.addAll(arr2);
+		return ret;
+	}
+	
 	@Override
 	public int lastIndexOf(E e) {
 		if (e == null)
@@ -359,7 +400,7 @@ public class Array<E> implements Block<E> {
 			E ret = (E)arr[index];
 			arr[index] = null;
 		
-			for (int j = 0; j < arr.length; ++j)
+			for (int j = 0; j < arr.length - 1; ++j)
 				arr[j] = arr[j + 1];
 			
 			return ret;
@@ -383,7 +424,7 @@ public class Array<E> implements Block<E> {
 
 		try {
 			for (int i = 0; i < arr.length; ++i) {
-				if (arr[i].equals(o)) {
+				if (arr[i] != null && arr[i].equals(o)) {
 					arr[i] = null;
 					
 					for (int j = i; j < arr.length - 1; ++j)
@@ -429,7 +470,7 @@ public class Array<E> implements Block<E> {
 		
 		try {
 			for (int i = 0; i < arr.length; ++i) {
-				if (arr[i].equals(o)) {
+				if (arr[i] != null && arr[i].equals(o)) {
 					arr[i] = null;
 					
 					for (int j = i; j < arr.length - 1; ++j)
@@ -462,7 +503,7 @@ public class Array<E> implements Block<E> {
 		
 		try {
 			for (int i = arr.length - 1; i >= 0; --i) {
-				if (arr[i].equals(o)) {
+				if (arr[i] != null && arr[i].equals(o)) {
 					arr[i] = null;
 					
 					for (int j = i; j < arr.length - 1; ++j)
@@ -596,7 +637,7 @@ public class Array<E> implements Block<E> {
 	 * @since 21
 	 */
 	@Override
-	public Array<E> subBlock(int start, int end) 
+	public Array<? extends E> subBlock(int start, int end) 
 			throws IllegalArgumentException {
 		if (start < 0 || end > this.sizeUsed() || start >= end)
 			throw new IllegalArgumentException("Cannot create a sub-array due to invalid indices.");
@@ -611,12 +652,12 @@ public class Array<E> implements Block<E> {
 
 	@Override
 	public Object[] toArray() {
-		Object[] copy = new Object[arr.length];
+		Object[] copy = new Object[this.sizeUsed()];
 		
 		readLock.lock();
 		
 		try {
-			for (int i = 0; i < arr.length; ++i)
+			for (int i = 0; i < copy.length; ++i)
 				copy[i] = arr[i];
 		}
 		finally {
@@ -629,12 +670,12 @@ public class Array<E> implements Block<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T[] toArray(T[] a) {
-		Object[] copy = new Object[arr.length];
+		Object[] copy = new Object[this.sizeUsed()];
 		
 		readLock.lock();
 		
 		try {
-			for (int i = 0; i < arr.length; ++i)
+			for (int i = 0; i < copy.length; ++i)
 				copy[i] = arr[i];
 		}
 		finally {
@@ -662,9 +703,9 @@ public class Array<E> implements Block<E> {
 		try {
 			for (int i = 0; i < arr.length; ++i) {
 				if (i < arr.length - 1)
-					ret += arr[i].toString() + " ";
+					ret += (arr[i] == null) ? "null, " : arr[i].toString() + ", ";
 				else
-					ret += arr[i].toString();
+					ret += (arr[i] == null) ? "null" : arr[i].toString();
 			}
 		}
 		finally {

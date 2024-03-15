@@ -15,7 +15,7 @@ import babs.mindforge.util.ArrayInto;
  * and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @param <E> The Comparable element type.
  * @see Block
  * @see Comparable
@@ -158,14 +158,41 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	 * @throw NullPointerException Thrown if any element in c is null.
 	 * @since 21
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean addAll(Collection<? extends E> c) 
 			throws NullPointerException {
 		Iterator<? extends E> it = c.iterator();
-		boolean ret = false;
+		boolean ret = true;
 		
-		while (it.hasNext()) {
-			ret |= this.add(it.next());
+		writeLock.lock();
+		
+		try {
+			while (it.hasNext()) {
+				E e = it.next();
+				boolean r = false;
+				
+				for (int i = 0; i < arr.length && r == false; ++i) {
+					if (arr[i] == null) {
+						arr[i] = e;
+						r = true;
+					}
+					else if ((order == ASCENDING && e.compareTo((E)arr[i]) < 0) ||
+							(order == DESCENDING && e.compareTo((E)arr[i]) > 0)) {
+						for (int j = arr.length - 1; j > i; --j)
+							arr[j] = arr[j - 1];
+						
+						arr[i] = e;
+						
+						r = true;
+					}
+				}
+				
+				ret &= r;
+			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return ret;
@@ -190,7 +217,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	
 	@Override
 	public Object clone() {
-		Array<E> ret = new Array<E>(arr.length);
+		SortedArray<E> ret = new SortedArray<E>(arr.length);
 		
 		readLock.lock();
 		
@@ -214,7 +241,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 		
 		try {
 			for (int i = 0; i < arr.length; ++i) {
-				if (arr[i].equals(o))
+				if (arr[i] != null && arr[i].equals(o))
 					return true;
 			}
 		}
@@ -439,7 +466,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 		
 		try {
 			for (int i = 0; i < arr.length; ++i) {
-				if (arr[i].equals(o)) {
+				if (arr[i] != null && arr[i].equals(o)) {
 					arr[i] = null;
 					
 					for (int j = i; j < arr.length - 1; ++j)
@@ -485,7 +512,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 		
 		try {
 			for (int i = 0; i < arr.length; ++i) {
-				if (arr[i].equals(o)) {
+				if (arr[i] != null && arr[i].equals(o)) {
 					arr[i] = null;
 					
 					for (int j = i; j < arr.length - 1; ++j)
@@ -518,7 +545,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 		
 		try {
 			for (int i = arr.length - 1; i >= 0; --i) {
-				if (arr[i].equals(o)) {
+				if (arr[i] != null && arr[i].equals(o)) {
 					arr[i] = null;
 					
 					for (int j = i; j < arr.length - 1; ++j)
@@ -556,6 +583,28 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 		}
 		
 		return ret;
+	}
+	
+	/**
+	 * Reverses the order of this SortedArray.
+	 * @returns A SortedArray containing this SortedArray in reverse order.
+	 * @since 21
+	 */
+	@SuppressWarnings("unchecked")
+	public SortedArray<E> reverse() {
+		readLock.lock();
+		
+		try {
+			SortedArray<E> ret = new SortedArray<E>(this.sizeUsed(), !order);
+			
+			for (int i = 0; i < this.sizeUsed(); ++i)
+				ret.add((E)arr[i]);
+			
+			return ret;
+		}
+		finally {
+			readLock.unlock();
+		}
 	}
 	
 	/**
@@ -642,12 +691,12 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 
 	@Override
 	public Object[] toArray() {
-		Object[] copy = new Object[arr.length];
+		Object[] copy = new Object[this.sizeUsed()];
 		
 		readLock.lock();
 		
 		try {
-			for (int i = 0; i < arr.length; ++i)
+			for (int i = 0; i < copy.length; ++i)
 				copy[i] = arr[i];
 		}
 		finally {
@@ -660,12 +709,12 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T[] toArray(T[] a) {
-		Object[] copy = new Object[arr.length];
+		Object[] copy = new Object[this.sizeUsed()];
 		
 		readLock.lock();
 		
 		try {
-			for (int i = 0; i < arr.length; ++i)
+			for (int i = 0; i < copy.length; ++i)
 				copy[i] = arr[i];
 		}
 		finally {
@@ -693,9 +742,9 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 		try {
 			for (int i = 0; i < arr.length; ++i) {
 				if (i < arr.length - 1)
-					ret += arr[i].toString() + " ";
+					ret += (arr[i] == null) ? "null, " : arr[i].toString() + ", ";
 				else
-					ret += arr[i].toString();
+					ret += (arr[i] == null) ? "null" : arr[i].toString();
 			}
 		}
 		finally {

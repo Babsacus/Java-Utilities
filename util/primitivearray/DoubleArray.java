@@ -14,7 +14,7 @@ import babs.mindforge.util.ArrayInto;
  * implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @see PrimitiveArray
  * @since 21
  */
@@ -163,7 +163,7 @@ public class DoubleArray implements PrimitiveArray {
 		for (int i = 0; i < array.length / Double.BYTES; ++i) {
 			long v = 0;
 			for (int j = 0; j < Double.BYTES; ++j)
-				v |= (array[j + (i * Double.BYTES)] << (Byte.SIZE * (Double.BYTES - 1 - j)));
+				v |= (long)array[j + (i * Double.BYTES)] << (Byte.SIZE * (Double.BYTES - 1 - j));
 			ret.set(i, Double.longBitsToDouble(v));
 		}
 		return ret;

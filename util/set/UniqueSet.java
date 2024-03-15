@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * {@link #iterator()} method. UniqueSet implements Set and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @param <E> The element type.
  * @see Set
  * @since 21
@@ -72,18 +72,18 @@ public class UniqueSet<E> implements Set<E> {
 		if (e == null)
 			return false;
 		
-		if (!this.contains(e)) {
-			writeLock.lock();
-			
-			try {
+		writeLock.lock();
+		
+		try {
+			if (!this.contains(e)) {
 				return set.add(e);
 			}
-			finally {
-				writeLock.unlock();
+			else {
+				return false;
 			}
 		}
-		else {
-			return false;
+		finally {
+			writeLock.unlock();
 		}
 	}
 	
@@ -103,8 +103,22 @@ public class UniqueSet<E> implements Set<E> {
 		Iterator<? extends E> it = c.iterator();
 		boolean ret = false;
 		
-		while (it.hasNext()) {
-			ret |= this.add(it.next());
+		writeLock.lock();
+		
+		try {
+			while (it.hasNext()) {
+				E e = it.next();
+				boolean r = false;
+				
+				if (!this.contains(e)) {
+					r = set.add(e);
+				}
+				
+				ret &= r;
+			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return ret;
@@ -182,7 +196,7 @@ public class UniqueSet<E> implements Set<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Iterator<E> iterator() {
-		return ((UniqueSet<E>)set.clone()).iterator();
+		return ((ArrayList<E>)set.clone()).iterator();
 	}
 
 	@Override
@@ -266,10 +280,12 @@ public class UniqueSet<E> implements Set<E> {
 		try {
 			for (int i = 0; i < set.size(); ++i) {
 				if (i < set.size() - 1)
-					ret += set.get(i).toString() + " ";
+					ret += set.get(i).toString() + ", ";
 				else
-					ret += set.get(i).toString() + " }";
+					ret += set.get(i).toString();
 			}
+			
+			ret += " }";
 		}
 		finally {
 			readLock.unlock();

@@ -26,17 +26,18 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.PriorityBlockingQueue;
-import java.util.concurrent.SynchronousQueue;
 
 /**
  * ArrayInto class provides static methods for converting an array of elements into any 
  * type of Java Collection (interface or class) in the {@link java.util} package, with 
- * the exception of Stack and Vector. Stack and Vector are viewed as obsolete and can
- * be replaced with Deque and ArrayList respectively. Static methods are also available
- * to convert any primitive array into any type of Java Collection (interface or class).
+ * the exception of Stack, SynchronousQueue, and Vector. Stack and Vector are viewed as 
+ * obsolete and can be replaced with Deque and ArrayList respectively. SynchronousQueue
+ * cannot hold an array of data due to its inherent design. Static methods are also 
+ * available to convert any primitive array into any type of Java Collection (interface 
+ * or class).
  * 
  * @author Monroe Gordon
- * @version 0.0.1
+ * @version 0.1.2
  * @see java.util
  * @since 21
  */
@@ -3510,178 +3511,6 @@ public class ArrayInto {
 			return null;
 		
 		Queue<Short> ret = new ArrayDeque<Short>(array.length);
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified array into a SynchronousQueue.
-	 * @param <E> The element type.
-	 * @param array The array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static <E> SynchronousQueue<E> synchronousQueue(E[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<E> ret = new SynchronousQueue<E>();
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified boolean array into a SynchronousQueue.
-	 * @param array The boolean array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static SynchronousQueue<Boolean> synchronousQueue(boolean[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<Boolean> ret = new SynchronousQueue<Boolean>();
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified byte array into a SynchronousQueue.
-	 * @param array The byte array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static SynchronousQueue<Byte> synchronousQueue(byte[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<Byte> ret = new SynchronousQueue<Byte>();
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified char array into a SynchronousQueue.
-	 * @param array The char array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static SynchronousQueue<Character> synchronousQueue(char[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<Character> ret = new SynchronousQueue<Character>();
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified double array into a SynchronousQueue.
-	 * @param array The double array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static SynchronousQueue<Double> synchronousQueue(double[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<Double> ret = new SynchronousQueue<Double>();
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified float array into a SynchronousQueue.
-	 * @param array The float array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static SynchronousQueue<Float> synchronousQueue(float[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<Float> ret = new SynchronousQueue<Float>();
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified int array into a SynchronousQueue.
-	 * @param array The int array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static SynchronousQueue<Integer> synchronousQueue(int[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<Integer> ret = new SynchronousQueue<Integer>();
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified long array into a SynchronousQueue.
-	 * @param array The long array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static SynchronousQueue<Long> synchronousQueue(long[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<Long> ret = new SynchronousQueue<Long>();
-		
-		for (int i = 0; i < array.length; ++i)
-			ret.add(array[i]);
-		
-		return ret;
-	}
-	
-	/**
-	 * Converts the specified short array into a SynchronousQueue.
-	 * @param array The short array of elements to convert.
-	 * @return A SynchronousQueue containing the elements in array.
-	 * @see SynchronousQueue
-	 * @since 21
-	 */
-	public static SynchronousQueue<Short> synchronousQueue(short[] array) {
-		if (array == null)
-			return null;
-		
-		SynchronousQueue<Short> ret = new SynchronousQueue<Short>();
 		
 		for (int i = 0; i < array.length; ++i)
 			ret.add(array[i]);

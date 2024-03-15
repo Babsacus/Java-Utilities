@@ -10,7 +10,7 @@ import java.util.Iterator;
  * safety of the Array. ArrayIterator implements Iterator.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @param <E> The Array element type.
  * @see Array
  * @see Iterator

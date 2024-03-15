@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @param <E> The key type.
  * @see WeightedSet
  * @since 21
@@ -120,7 +120,7 @@ public class WeightedKey<E> implements Entry<E, Float> {
 	 * @see WeightSet
 	 * @since 21
 	 */
-	public Float normalize(float max) {
+	public Float normalize(Float max) {
 		writeLock.lock();
 		
 		try {

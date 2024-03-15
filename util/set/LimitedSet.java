@@ -15,7 +15,7 @@ import java.util.Vector;
  * thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @param <E> The element type.
  * @see UniqueSet
  * @see Vector
@@ -82,22 +82,22 @@ public class LimitedSet<E> extends UniqueSet<E> {
 	 * @since 21
 	 */
 	@Override
-	public synchronized boolean add(E e) {
+	public boolean add(E e) {
 		if (e == null)
 			return false;
 		
-		if (!this.contains(e) && set.size() < maxCapacity) {
-			writeLock.lock();
-			
-			try {
+		writeLock.lock();
+		
+		try {
+			if (!this.contains(e) && set.size() < maxCapacity) {
 				return set.add(e);
 			}
-			finally {
-				writeLock.unlock();
+			else {
+				return false;
 			}
 		}
-		else {
-			return false;
+		finally {
+			writeLock.unlock();
 		}
 	}
 	
@@ -111,15 +111,29 @@ public class LimitedSet<E> extends UniqueSet<E> {
 	 * @since 21
 	 */
 	@Override
-	public synchronized boolean addAll(Collection<? extends E> c) {
+	public boolean addAll(Collection<? extends E> c) {
 		if (c == null)
 			return false;
 		
 		Iterator<? extends E> it = c.iterator();
 		boolean ret = true;
 		
-		while (it.hasNext()) {
-			ret &= this.add(it.next());
+		writeLock.lock();
+		
+		try {
+			while (it.hasNext()) {
+				E e = it.next();
+				boolean r = false;
+				
+				if (!this.contains(e) && set.size() < maxCapacity) {
+					r = set.add(e);
+				}
+				
+				ret &= r;
+			}
+		}
+		finally {
+			writeLock.unlock();
 		}
 		
 		return ret;
@@ -149,7 +163,7 @@ public class LimitedSet<E> extends UniqueSet<E> {
 	 * @param maxCapacity The new maximum element capacity.
 	 * @since 21
 	 */
-	public synchronized void setMaxCapacity(int maxCapacity) {
+	public void setMaxCapacity(int maxCapacity) {
 		writeLock.lock();
 		
 		try {

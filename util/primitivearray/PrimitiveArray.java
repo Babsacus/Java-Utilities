@@ -8,7 +8,7 @@ import java.util.Iterator;
  * array type.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @since 21
  */
 public interface PrimitiveArray {

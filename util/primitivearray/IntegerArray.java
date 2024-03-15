@@ -14,7 +14,7 @@ import babs.mindforge.util.ArrayInto;
  * implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.0.2
+ * @version 0.1.2
  * @see PrimitiveArray
  * @since 21
  */
