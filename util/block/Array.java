@@ -9,23 +9,20 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * Array class is a wrapper class for an array of elements that implements Block. An 
- * Array has a specified maximum number of elements. Any uninitialized elements are set 
- * to null. The {@link #size()} method will return the maximum number of elements. The 
- * {@link #sizeUsed()} method will return the number of non-null elements in the Array, 
- * and {@link #sizeUnused()} method will return the number of null elements. When 
- * adding or removing elements, the first null element is replaced with a non-null
- * value when adding, and the removed element is removed by shifting all following
- * elements, overwriting the removed element and setting the last element to null. Null
- * elements cannot be added to the Array, nor can an element by set to null, since null
- * is used to identify unused elements. Arrays are not resizable. Array implements 
- * Block and is thread-safe.
+ * Array class is a wrapper class for an array of elements that implements Block. An Array has a specified maximum 
+ * number of elements. Any uninitialized elements are set to null. The {@link #size()} method will return the maximum 
+ * number of elements. The {@link #sizeUsed()} method will return the number of non-null elements in the Array, and 
+ * {@link #sizeUnused()} method will return the number of null elements. When adding or removing elements, the first 
+ * null element is replaced with a non-null value when adding, and the removed element is removed by shifting all 
+ * following elements, overwriting the removed element and setting the last element to null. Null elements cannot be 
+ * added to the Array, nor can an element by set to null, since null is used to identify unused elements. Arrays are 
+ * not resizable. Array implements Block and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @param <E> The element type.
  * @see Block
- * @since 21
+ * @since JDK-21
  */
 public class Array<E> implements Block<E> {
 	
@@ -36,11 +33,11 @@ public class Array<E> implements Block<E> {
 	/**
 	 * The read lock from the read/write lock.
 	 */
-	private final Lock readLock = lock.readLock();
+	protected final Lock readLock = lock.readLock();
 	/**
 	 * The write lock from the read/write lock.
 	 */
-	private final Lock writeLock = lock.writeLock();
+	protected final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * The array backing the Array class.
@@ -48,11 +45,10 @@ public class Array<E> implements Block<E> {
 	protected Object[] arr;
 	
 	/**
-	 * Constructor that creates an Array with the specified size will all elements set 
-	 * to null.
+	 * Constructor that creates an Array with the specified size will all elements set to null.
 	 * @param size The size of this Array.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Array(int size) 
 			throws NegativeArraySizeException {
@@ -68,19 +64,24 @@ public class Array<E> implements Block<E> {
 	/**
 	 * Constructor that creates an Array with the same elements as the specified array.
 	 * @param arr The array to store into this.
-	 * @since 21
+	 * @throws NullPointerException Thrown if arr is null.
+	 * @since JDK-21
 	 */
-	public Array(E[] arr) {
+	public Array(E[] arr) 
+			throws NullPointerException {
+		if (arr == null)
+			throw new NullPointerException("Array cannot be null.");
+		
 		this.arr = arr;
 	}
 
 	/**
-	 * Replaces the first null element with the specified element. If no null elements
-	 * exist, this returns false. Adding a null element throws an exception.
+	 * Replaces the first null element with the specified element. If no null elements exist, this returns false. 
+	 * Adding a null element throws an exception.
 	 * @param e The element to add.
 	 * @return True if e is added, otherwise false.
 	 * @throws NullPointerException Thrown if e is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean add(E e) 
@@ -106,12 +107,12 @@ public class Array<E> implements Block<E> {
 	}
 	
 	/**
-	 * Replaces null elements with the elements in the specified Collection. Any null
-	 * elements in the specified Collection will cause an exception to be thrown.
+	 * Replaces null elements with the elements in the specified Collection. Any null elements in the specified 
+	 * Collection will cause an exception to be thrown.
 	 * @param c The Collection to add.
 	 * @return True if elements were added, otherwise false.
 	 * @throw NullPointerException Thrown if any element in c is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean addAll(Collection<? extends E> c) 
@@ -148,7 +149,7 @@ public class Array<E> implements Block<E> {
 	
 	/**
 	 * Replaces all elements with null values. The size of the Array does not change.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public void clear() {
@@ -244,20 +245,19 @@ public class Array<E> implements Block<E> {
 	}
 	
 	/**
-	 * Returns the element at the specified index, if the index is within the bounds 
-	 * of [0, sizeUsed()).
+	 * Returns the element at the specified index, if the index is within the bounds of [0, sizeUsed()).
 	 * @param index The index of the element to return.
 	 * @return The element at index.
-	 * @throws ArrayIndexOutOfBoundsException Thrown if index is less than 0 or
-	 * greater than or equal to {@link #sizeUsed()} or {@link #size()}.
-	 * @since 21
+	 * @throws ArrayIndexOutOfBoundsException Thrown if index is less than 0 or greater than or equal to {@link 
+	 * #sizeUsed()} or {@link #size()}.
+	 * @since JDK-21
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int index) 
 			throws ArrayIndexOutOfBoundsException {
 		if (index < 0 || index >= this.sizeUsed() || index >= this.size())
-			throw new ArrayIndexOutOfBoundsException("Cannot set Array value due to out-of-bounds index.");
+			throw new ArrayIndexOutOfBoundsException("Cannot get Array value due to out-of-bounds index.");
 		
 		readLock.lock();
 		
@@ -304,7 +304,7 @@ public class Array<E> implements Block<E> {
 	/**
 	 * Returns true if all elements in this Array are null.
 	 * @return True if all elements are null, otherwise false.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -329,8 +329,7 @@ public class Array<E> implements Block<E> {
 	}
 	
 	/**
-	 * Creates a new Array by joining the two specified arrays in the order that
-	 * they are specified.
+	 * Creates a new Array by joining the two specified arrays in the order that they are specified.
 	 * @param <E> The element type.
 	 * @param arr1 The first array/
 	 * @param arr2 The second array.
@@ -344,8 +343,7 @@ public class Array<E> implements Block<E> {
 	}
 	
 	/**
-	 * Creates a new Array by joining the two specified arrays in the order that
-	 * they are specified.
+	 * Creates a new Array by joining the two specified arrays in the order that they are specified.
 	 * @param <E> The element type.
 	 * @param arr1 The first array/
 	 * @param arr2 The second array.
@@ -379,20 +377,20 @@ public class Array<E> implements Block<E> {
 	}
 	
 	/**
-	 * Removes the element at the specified index by shifting all the following 
-	 * elements, overwriting the element to remove, and setting the last element 
-	 * to null.
+	 * Removes the element at the specified index by shifting all the following elements, overwriting the element to 
+	 * remove, and setting the last element to null.
 	 * @param index The index of the element to remove.
 	 * @return The removed element.
 	 * @throws ArrayIndexOutOfBoundsException Thrown if index is out-of-bounds.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public E remove(int index) 
 			throws ArrayIndexOutOfBoundsException {
 		if (index < 0 || index >= this.sizeUsed())
-			throw new ArrayIndexOutOfBoundsException("Cannot remove element at index due to out-of-bounds index.");
+			throw new ArrayIndexOutOfBoundsException("Cannot remove element at index due to " +
+					"out-of-bounds index.");
 		
 		writeLock.lock();
 		
@@ -411,12 +409,11 @@ public class Array<E> implements Block<E> {
 	}
 	
 	/**
-	 * Removes the first occurrence of the specified Object by shifting all the
-	 * following elements, overwriting the element to remove, and setting the last
-	 * element to null.
+	 * Removes the first occurrence of the specified Object by shifting all the following elements, overwriting the 
+	 * element to remove, and setting the last element to null.
 	 * @param o The Object to remove.
 	 * @return True if o was removed, otherwise false.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean remove(Object o) {
@@ -444,11 +441,10 @@ public class Array<E> implements Block<E> {
 	}
 
 	/**
-	 * Removes any elements that are contained within the specified Collection by
-	 * setting those elements to null.
+	 * Removes any elements that are contained within the specified Collection by setting those elements to null.
 	 * @param c The Collection to remove.
 	 * @return True if elements were removed, otherwise false.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean removeAll(Collection<?> c) {
@@ -490,12 +486,11 @@ public class Array<E> implements Block<E> {
 	}
 	
 	/**
-	 * Removes the last occurrence of the specified Object by shifting all the
-	 * following elements, overwriting the element to remove, and setting the last
-	 * element to null.
+	 * Removes the last occurrence of the specified Object by shifting all the following elements, overwriting the 
+	 * element to remove, and setting the last element to null.
 	 * @param o The Object to remove.
 	 * @return True if o was removed, otherwise false.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean removeLast(Object o) {
@@ -547,10 +542,9 @@ public class Array<E> implements Block<E> {
 	 * Sets the Array element at the specified index to the specified value.
 	 * @param index The index of the element to set.
 	 * @param e The value of the element to set.
-	 * @throws ArrayIndexOutOfBoundsException Thrown if index is less than 0, or
-	 * greater than {@link #sizeUsed()} or greater than or equal to {@link 
-	 * #size()}.
-	 * @since 21
+	 * @throws ArrayIndexOutOfBoundsException Thrown if index is less than 0, or greater than {@link #sizeUsed()} or 
+	 * greater than or equal to {@link #size()}.
+	 * @since JDK-21
 	 */
 	public void set(int index, E e) 
 			throws ArrayIndexOutOfBoundsException {
@@ -571,10 +565,9 @@ public class Array<E> implements Block<E> {
 	}
 	
 	/**
-	 * Returns the size of this Array which is the maximum number of elements this
-	 * Array can hold.
+	 * Returns the size of this Array which is the maximum number of elements this Array can hold.
 	 * @returns The maximum number of elements this Array can hold.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public int size() {
@@ -631,10 +624,9 @@ public class Array<E> implements Block<E> {
 	 * @param start The index to start at (included).
 	 * @param end The index to stop at (excluded).
 	 * @return An Array containing elements of this from [start, end).
-	 * @throws IllegalArgumentException Thrown if start is negative or if end is
-	 * greater than {@link #sizeUsed()} or if start is greater than or equal to
-	 * end.
-	 * @since 21
+	 * @throws IllegalArgumentException Thrown if start is negative or if end is greater than {@link #sizeUsed()} or 
+	 * if start is greater than or equal to end.
+	 * @since JDK-21
 	 */
 	@Override
 	public Array<? extends E> subBlock(int start, int end) 

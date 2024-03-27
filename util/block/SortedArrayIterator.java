@@ -3,19 +3,17 @@ package babs.mindforge.util.block;
 import java.util.Iterator;
 
 /**
- * SortedArrayIterator class creates an Iterator for a SortedArray. The 
- * SortedArrayIterator copies the specified SortedArray so that the Iterator is 
- * detached from the actual SortedArray. Therefore, changing the Array contents 
- * through the SortedArrayIterator will not change the original Array. This 
- * allows the SortedArrayIterator to maintain the thread safety of the 
- * SortedArray. SortedArrayIterator implements Iterator.
+ * SortedArrayIterator class creates an Iterator for a SortedArray. The SortedArrayIterator copies the specified 
+ * SortedArray so that the Iterator is detached from the actual SortedArray. Therefore, changing the Array contents 
+ * through the SortedArrayIterator will not change the original Array. This allows the SortedArrayIterator to maintain 
+ * the thread safety of the SortedArray. SortedArrayIterator implements Iterator.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @param <E> The SortedArray element type.
  * @see SortedArray
  * @see Iterator
- * @since 21
+ * @since JDK-21
  */
 public class SortedArrayIterator<E extends Comparable<E>> implements Iterator<E> {
 	
@@ -29,11 +27,10 @@ public class SortedArrayIterator<E extends Comparable<E>> implements Iterator<E>
 	private int index;
 	
 	/**
-	 * Constructor that creates an SortedArrayIterator from the specified 
-	 * SortedArray.
+	 * Constructor that creates an SortedArrayIterator from the specified SortedArray.
 	 * @param arr The SortedArray to create an Iterator from.
 	 * @throws NullPointerException Thrown if arr is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@SuppressWarnings("unchecked")
 	public SortedArrayIterator(SortedArray<E> arr) 

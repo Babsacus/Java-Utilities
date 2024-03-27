@@ -9,14 +9,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * IntegerArray class is a wrapper for a primitive int array. This class provides
- * convenience methods for performing array operations and manipulations. IntegerArray
- * implements PrimitiveArray and is thread-safe.
+ * IntegerArray class is a wrapper for a primitive int array. This class provides convenience methods for performing 
+ * array operations and manipulations. IntegerArray implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @see PrimitiveArray
- * @since 21
+ * @since JDK-21
  */
 public class IntegerArray implements PrimitiveArray {
 	
@@ -39,11 +38,10 @@ public class IntegerArray implements PrimitiveArray {
 	private int[] arr;
 	
 	/**
-	 * Constructor that creates a IntegerArray with the specified size will all elements 
-	 * set to 0.
+	 * Constructor that creates a IntegerArray with the specified size will all elements set to 0.
 	 * @param size The size of this IntegerArray.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public IntegerArray(int size) {
 		if (size < 0)
@@ -56,7 +54,7 @@ public class IntegerArray implements PrimitiveArray {
 	 * Constructor that creates a IntegerArray from the specified int array.
 	 * @param array The int array to use.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public IntegerArray(int[] array) {
 		if (array == null)
@@ -148,10 +146,9 @@ public class IntegerArray implements PrimitiveArray {
 	 * Converts a byte array into a IntegerArray.
 	 * @param array The byte array to convert.
 	 * @return A IntegerArray containing the byte array.
-	 * @throws IllegalArgumentException Thrown if array's length is not evenly 
-	 * divisible by {@link Integer#BYTES}.
+	 * @throws IllegalArgumentException Thrown if array's length is not evenly divisible by {@link Integer#BYTES}.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static IntegerArray from(byte[] array) 
 			throws NullPointerException {
@@ -300,7 +297,7 @@ public class IntegerArray implements PrimitiveArray {
 	/**
 	 * Returns a copy of the int array backing this IntegerArray.
 	 * @return A copy of the int array.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public int[] toArray() {
 		int[] copy = new int[arr.length];

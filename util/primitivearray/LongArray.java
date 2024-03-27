@@ -9,14 +9,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * LongArray class is a wrapper for a primitive long array. This class provides
- * convenience methods for performing array operations and manipulations. LongArray
- * implements PrimitiveArray and is thread-safe.
+ * LongArray class is a wrapper for a primitive long array. This class provides convenience methods for performing 
+ * array operations and manipulations. LongArray implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @see PrimitiveArray
- * @since 21
+ * @since JDK-21
  */
 public class LongArray implements PrimitiveArray {
 	
@@ -39,11 +38,10 @@ public class LongArray implements PrimitiveArray {
 	private long[] arr;
 	
 	/**
-	 * Constructor that creates a LongArray with the specified size will all elements 
-	 * set to 0.
+	 * Constructor that creates a LongArray with the specified size will all elements set to 0.
 	 * @param size The size of this LongArray.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public LongArray(int size) {
 		if (size < 0)
@@ -56,7 +54,7 @@ public class LongArray implements PrimitiveArray {
 	 * Constructor that creates a LongArray from the specified long array.
 	 * @param array The long array to use.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public LongArray(long[] array) {
 		if (array == null)
@@ -148,10 +146,9 @@ public class LongArray implements PrimitiveArray {
 	 * Converts a byte array into a LongArray.
 	 * @param array The byte array to convert.
 	 * @return A LongArray containing the byte array.
-	 * @throws IllegalArgumentException Thrown if array's length is not evenly 
-	 * divisible by {@link Long#BYTES}.
+	 * @throws IllegalArgumentException Thrown if array's length is not evenly divisible by {@link Long#BYTES}.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LongArray from(byte[] array) 
 			throws NullPointerException {
@@ -300,7 +297,7 @@ public class LongArray implements PrimitiveArray {
 	/**
 	 * Returns a copy of the long array backing this LongArray.
 	 * @return A copy of the long array.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public long[] toArray() {
 		long[] copy = new long[arr.length];

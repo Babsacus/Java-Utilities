@@ -9,14 +9,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * BooleanArray class is a wrapper for a primitive boolean array. This class provides
- * convenience methods for performing array operations and manipulations. BooleanArray
- * implements PrimitiveArray and is thread-safe.
+ * BooleanArray class is a wrapper for a primitive boolean array. This class provides convenience methods for 
+ * performing array operations and manipulations. BooleanArray implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @see PrimitiveArray
- * @since 21
+ * @since JDK-21
  */
 public class BooleanArray implements PrimitiveArray {
 	
@@ -39,11 +38,10 @@ public class BooleanArray implements PrimitiveArray {
 	private boolean[] arr;
 	
 	/**
-	 * Constructor that creates a BooleanArray with the specified size will all elements 
-	 * set to 0.
+	 * Constructor that creates a BooleanArray with the specified size will all elements set to 0.
 	 * @param size The size of this BooleanArray.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public BooleanArray(int size) {
 		if (size < 0)
@@ -56,7 +54,7 @@ public class BooleanArray implements PrimitiveArray {
 	 * Constructor that creates a BooleanArray from the specified boolean array.
 	 * @param array The boolean array to use.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public BooleanArray(boolean[] array) {
 		if (array == null)
@@ -149,7 +147,7 @@ public class BooleanArray implements PrimitiveArray {
 	 * @param array The byte array to convert.
 	 * @return A BooleanArray containing the byte array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BooleanArray from(byte[] array) 
 			throws NullPointerException {
@@ -292,7 +290,7 @@ public class BooleanArray implements PrimitiveArray {
 	/**
 	 * Returns a copy of the boolean array backing this BooleanArray.
 	 * @return A copy of the boolean array.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public boolean[] toArray() {
 		boolean[] copy = new boolean[arr.length];

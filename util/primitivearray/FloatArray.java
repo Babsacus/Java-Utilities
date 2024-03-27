@@ -9,14 +9,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * FloatArray class is a wrapper for a primitive float array. This class provides
- * convenience methods for performing array operations and manipulations. FloatArray
- * implements PrimitiveArray and is thread-safe.
+ * FloatArray class is a wrapper for a primitive float array. This class provides convenience methods for performing 
+ * array operations and manipulations. FloatArray implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @see PrimitiveArray
- * @since 21
+ * @since JDK-21
  */
 public class FloatArray implements PrimitiveArray {
 	
@@ -39,11 +38,10 @@ public class FloatArray implements PrimitiveArray {
 	private float[] arr;
 	
 	/**
-	 * Constructor that creates a FloatArray with the specified size will all elements 
-	 * set to 0.
+	 * Constructor that creates a FloatArray with the specified size will all elements set to 0.
 	 * @param size The size of this FloatArray.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public FloatArray(int size) {
 		if (size < 0)
@@ -56,7 +54,7 @@ public class FloatArray implements PrimitiveArray {
 	 * Constructor that creates a FloatArray from the specified float array.
 	 * @param array The float array to use.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public FloatArray(float[] array) {
 		if (array == null)
@@ -148,10 +146,9 @@ public class FloatArray implements PrimitiveArray {
 	 * Converts a byte array into a FloatArray.
 	 * @param array The byte array to convert.
 	 * @return A FloatArray containing the byte array.
-	 * @throws IllegalArgumentException Thrown if array's length is not evenly 
-	 * divisible by {@link Float#BYTES}.
+	 * @throws IllegalArgumentException Thrown if array's length is not evenly divisible by {@link Float#BYTES}.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static FloatArray from(byte[] array) 
 			throws NullPointerException {
@@ -300,7 +297,7 @@ public class FloatArray implements PrimitiveArray {
 	/**
 	 * Returns a copy of the float array backing this FloatArray.
 	 * @return A copy of the float array.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public float[] toArray() {
 		float[] copy = new float[arr.length];

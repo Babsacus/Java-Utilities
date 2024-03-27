@@ -9,14 +9,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * DoubleArray class is a wrapper for a primitive double array. This class provides
- * convenience methods for performing array operations and manipulations. DoubleArray
- * implements PrimitiveArray and is thread-safe.
+ * DoubleArray class is a wrapper for a primitive double array. This class provides convenience methods for 
+ * performing array operations and manipulations. DoubleArray implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @see PrimitiveArray
- * @since 21
+ * @since JDK-21
  */
 public class DoubleArray implements PrimitiveArray {
 	
@@ -39,11 +38,10 @@ public class DoubleArray implements PrimitiveArray {
 	private double[] arr;
 	
 	/**
-	 * Constructor that creates a DoubleArray with the specified size will all elements 
-	 * set to 0.
+	 * Constructor that creates a DoubleArray with the specified size will all elements set to 0.
 	 * @param size The size of this DoubleArray.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public DoubleArray(int size) {
 		if (size < 0)
@@ -56,7 +54,7 @@ public class DoubleArray implements PrimitiveArray {
 	 * Constructor that creates a DoubleArray from the specified double array.
 	 * @param array The double array to use.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public DoubleArray(double[] array) {
 		if (array == null)
@@ -148,10 +146,9 @@ public class DoubleArray implements PrimitiveArray {
 	 * Converts a byte array into a DoubleArray.
 	 * @param array The byte array to convert.
 	 * @return A DoubleArray containing the byte array.
-	 * @throws IllegalArgumentException Thrown if array's length is not evenly 
-	 * divisible by {@link Double#BYTES}.
+	 * @throws IllegalArgumentException Thrown if array's length is not evenly divisible by {@link Double#BYTES}.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static DoubleArray from(byte[] array) 
 			throws NullPointerException {
@@ -300,7 +297,7 @@ public class DoubleArray implements PrimitiveArray {
 	/**
 	 * Returns a copy of the double array backing this DoubleArray.
 	 * @return A copy of the double array.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public double[] toArray() {
 		double[] copy = new double[arr.length];

@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Tuple class represents a group of immutable Objects. The Objects can be of any type and can 
- * be null. This class is simply of storage container for different Objects. Once a Tuple is 
- * created, it cannot have Objects added or removed. Objects in the Tuple are stored in the 
- * order they were specified and can be accessed through their index value. There is also a 
- * {@link #getAs(Class, int)} method that can attempt to return the desired Object cast as the 
- * desired class. If the cast fails, null is returned instead. Objects can be added or removed 
- * from a Tuple, but these methods return a new Tuple containing the change to the original 
- * Tuple. The original Tuple remains unchanged. Tuple is thread-safe since they are immutable.
+ * Tuple class represents a group of immutable Objects. The Objects can be of any type and can be null. This class is 
+ * simply of storage container for different Objects. Once a Tuple is created, it cannot have Objects added or 
+ * removed. Objects in the Tuple are stored in the order they were specified and can be accessed through their index 
+ * value. There is also a {@link #getAs(Class, int)} method that can attempt to return the desired Object cast as the 
+ * desired class. If the cast fails, null is returned instead. Objects can be added or removed from a Tuple, but 
+ * these methods return a new Tuple containing the change to the original Tuple. The original Tuple remains unchanged. 
+ * Tuple is thread-safe since they are immutable.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
- * @since 21
+ * @version 0.0.0
+ * @since JDK-21
  */
 public final class Tuple {
 	
@@ -26,7 +25,7 @@ public final class Tuple {
 	
 	/**
 	 * Default constructor that creates an empty Tuple.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Tuple() {
 		arr = new ArrayList<Object>();
@@ -35,7 +34,7 @@ public final class Tuple {
 	/**
 	 * Constructor that initializes this Tuple to contain the specified list of Objects.
 	 * @param objects The Objects to store.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Tuple(Object ...objects) {
 		arr = new ArrayList<Object>(objects.length);
@@ -49,7 +48,7 @@ public final class Tuple {
 	 * Returns a new Tuple containing this Tuple plus the specified Object to add.
 	 * @param o The Object to add.
 	 * @return A Tuple containing this and o.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Tuple add(Object o) {
 		Tuple ret = (Tuple)this.clone();
@@ -59,9 +58,9 @@ public final class Tuple {
 	
 	/**
 	 * Returns a new Tuple containing this Tuple plus the specified Object to add.
-	 * @param o The Object to add.
+	 * @param objects The Objects to add.
 	 * @return A Tuple containing this and o.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Tuple addAll(Object ...objects) {
 		Tuple ret = (Tuple)this.clone();
@@ -93,7 +92,7 @@ public final class Tuple {
 	 * @param index The index of the Object.
 	 * @return The Object at index.
 	 * @throws ArrayIndexOutOfBoundsException Thrown if index is out-of-bounds.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Object get(int index) 
 			throws ArrayIndexOutOfBoundsException {
@@ -104,13 +103,13 @@ public final class Tuple {
 	}
 	
 	/**
-	 * Returns the Object at the specified index casted to the specified class. If the Object
-	 * at index is not an instance of the specified class, null is returned.
+	 * Returns the Object at the specified index casted to the specified class. If the Object at index is not an 
+	 * instance of the specified class, null is returned.
 	 * @param <T> Any type.
 	 * @param clazz The class to cast the Object to.
 	 * @param index The index of the Object.
 	 * @return The Object at index cast as T, or null if cast fails.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Object> T getAs(Class<T> clazz, int index) {
@@ -137,7 +136,7 @@ public final class Tuple {
 	/**
 	 * Returns true if this Tuple contains no Objects.
 	 * @return True if this is empty.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public boolean isEmpty() {
 		return arr.isEmpty();
@@ -146,18 +145,18 @@ public final class Tuple {
 	/**
 	 * Returns an iterator over the elements in the Tuple.
 	 * @return An iterator over this.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Iterator<Object> iterator() {
 		return arr.iterator();
 	}
 	
 	/**
-	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This
-	 * removes the first occurrence of the specified Object.
+	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This removes the first 
+	 * occurrence of the specified Object.
 	 * @param o The Object to remove.
 	 * @return A Tuple containing this without o.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Tuple remove(Object o) {
 		Tuple ret = (Tuple)this.clone();
@@ -166,11 +165,11 @@ public final class Tuple {
 	}
 	
 	/**
-	 * Returns a new Tuple containing this Tuple minus all the specified Objects. This
-	 * removes any occurrence of each specified Object.
+	 * Returns a new Tuple containing this Tuple minus all the specified Objects. This removes any occurrence of each 
+	 * specified Object.
 	 * @param objects The Objects to remove.
 	 * @return A Tuple containing this without objects.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Tuple removeAll(Object ...objects) {
 		Tuple ret = (Tuple)this.clone();
@@ -180,11 +179,11 @@ public final class Tuple {
 	}
 	
 	/**
-	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This
-	 * removes any occurrence of the specified Object.
+	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This removes any occurrence of 
+	 * the specified Object.
 	 * @param o The Object to remove.
 	 * @return A Tuple containing this without o.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Tuple removeAny(Object o) {
 		Tuple ret = (Tuple)this.clone();
@@ -196,11 +195,11 @@ public final class Tuple {
 	}
 	
 	/**
-	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This
-	 * removes the last occurrence of the specified Object.
+	 * Returns a new Tuple containing this Tuple minus the specified Object to remove. This removes the last 
+	 * occurrence of the specified Object.
 	 * @param o The Object to remove.
 	 * @return A Tuple containing this without o.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Tuple removeLast(Object o) {
 		Tuple ret = (Tuple)this.clone();
@@ -216,7 +215,7 @@ public final class Tuple {
 	/**
 	 * Returns the number of Objects in this Tuple.
 	 * @return The size of this.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public int size() {
 		return arr.size();
@@ -225,7 +224,7 @@ public final class Tuple {
 	/**
 	 * Returns this Tuple as an array.
 	 * @return this Tuple as an array.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public Object[] toArray() {
 		return arr.toArray();

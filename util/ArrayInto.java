@@ -28,18 +28,16 @@ import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
- * ArrayInto class provides static methods for converting an array of elements into any 
- * type of Java Collection (interface or class) in the {@link java.util} package, with 
- * the exception of Stack, SynchronousQueue, and Vector. Stack and Vector are viewed as 
- * obsolete and can be replaced with Deque and ArrayList respectively. SynchronousQueue
- * cannot hold an array of data due to its inherent design. Static methods are also 
- * available to convert any primitive array into any type of Java Collection (interface 
- * or class).
+ * ArrayInto class provides static methods for converting an array of elements into any type of Java Collection 
+ * (interface or class) in the {@link java.util} package, with the exception of Stack, SynchronousQueue, and Vector. 
+ * Stack and Vector are viewed as obsolete and can be replaced with Deque and ArrayList respectively. 
+ * SynchronousQueue cannot hold an array of data due to its inherent design. Static methods are also available to 
+ * convert any primitive array into any type of Java Collection (interface or class).
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @see java.util
- * @since 21
+ * @since JDK-21
  */
 public class ArrayInto {
 	
@@ -49,7 +47,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> ArrayBlockingQueue<E> arrayBlockingQueue(E[] array) {
 		if (array == null)
@@ -68,7 +66,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayBlockingQueue<Boolean> arrayBlockingQueue(boolean[] array) {
 		if (array == null)
@@ -87,7 +85,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayBlockingQueue<Byte> arrayBlockingQueue(byte[] array) {
 		if (array == null)
@@ -106,7 +104,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayBlockingQueue<Character> arrayBlockingQueue(char[] array) {
 		if (array == null)
@@ -125,7 +123,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayBlockingQueue<Double> arrayBlockingQueue(double[] array) {
 		if (array == null)
@@ -144,7 +142,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayBlockingQueue<Float> arrayBlockingQueue(float[] array) {
 		if (array == null)
@@ -163,7 +161,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayBlockingQueue<Integer> arrayBlockingQueue(int[] array) {
 		if (array == null)
@@ -182,7 +180,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayBlockingQueue<Long> arrayBlockingQueue(long[] array) {
 		if (array == null)
@@ -201,7 +199,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return An ArrayBlockingQueue containing the elements in array.
 	 * @see ArrayBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayBlockingQueue<Short> arrayBlockingQueue(short[] array) {
 		if (array == null)
@@ -221,7 +219,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> ArrayDeque<E> arrayDeque(E[] array) {
 		if (array == null)
@@ -240,7 +238,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayDeque<Boolean> arrayDeque(boolean[] array) {
 		if (array == null)
@@ -259,7 +257,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayDeque<Byte> arrayDeque(byte[] array) {
 		if (array == null)
@@ -278,7 +276,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayDeque<Character> arrayDeque(char[] array) {
 		if (array == null)
@@ -297,7 +295,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayDeque<Double> arrayDeque(double[] array) {
 		if (array == null)
@@ -316,7 +314,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayDeque<Float> arrayDeque(float[] array) {
 		if (array == null)
@@ -335,7 +333,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayDeque<Integer> arrayDeque(int[] array) {
 		if (array == null)
@@ -354,7 +352,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayDeque<Long> arrayDeque(long[] array) {
 		if (array == null)
@@ -373,7 +371,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return An ArrayDeque containing the elements in array.
 	 * @see ArrayDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayDeque<Short> arrayDeque(short[] array) {
 		if (array == null)
@@ -393,7 +391,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> ArrayList<E> arrayList(E[] array) {
 		if (array == null)
@@ -412,7 +410,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayList<Boolean> arrayList(boolean[] array) {
 		if (array == null)
@@ -431,7 +429,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayList<Byte> arrayList(byte[] array) {
 		if (array == null)
@@ -450,7 +448,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayList<Character> arrayList(char[] array) {
 		if (array == null)
@@ -469,7 +467,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayList<Double> arrayList(double[] array) {
 		if (array == null)
@@ -488,7 +486,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayList<Float> arrayList(float[] array) {
 		if (array == null)
@@ -507,7 +505,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayList<Integer> arrayList(int[] array) {
 		if (array == null)
@@ -526,7 +524,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayList<Long> arrayList(long[] array) {
 		if (array == null)
@@ -545,7 +543,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return An ArrayList containing the elements in array.
 	 * @see ArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ArrayList<Short> arrayList(short[] array) {
 		if (array == null)
@@ -565,7 +563,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> BlockingDeque<E> blockingDeque(E[] array) {
 		if (array == null)
@@ -584,7 +582,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingDeque<Boolean> blockingDeque(boolean[] array) {
 		if (array == null)
@@ -603,7 +601,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingDeque<Byte> blockingDeque(byte[] array) {
 		if (array == null)
@@ -622,7 +620,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingDeque<Character> blockingDeque(char[] array) {
 		if (array == null)
@@ -641,7 +639,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingDeque<Double> blockingDeque(double[] array) {
 		if (array == null)
@@ -660,7 +658,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingDeque<Float> blockingDeque(float[] array) {
 		if (array == null)
@@ -679,7 +677,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingDeque<Integer> blockingDeque(int[] array) {
 		if (array == null)
@@ -698,7 +696,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingDeque<Long> blockingDeque(long[] array) {
 		if (array == null)
@@ -717,7 +715,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A BlockingDeque containing the elements in array.
 	 * @see BlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingDeque<Short> blockingDeque(short[] array) {
 		if (array == null)
@@ -737,7 +735,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> BlockingQueue<E> blockingQueue(E[] array) {
 		if (array == null)
@@ -756,7 +754,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingQueue<Boolean> blockingQueue(boolean[] array) {
 		if (array == null)
@@ -775,7 +773,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingQueue<Byte> blockingQueue(byte[] array) {
 		if (array == null)
@@ -794,7 +792,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingQueue<Character> blockingQueue(char[] array) {
 		if (array == null)
@@ -813,7 +811,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingQueue<Double> blockingQueue(double[] array) {
 		if (array == null)
@@ -832,7 +830,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingQueue<Float> blockingQueue(float[] array) {
 		if (array == null)
@@ -851,7 +849,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingQueue<Integer> blockingQueue(int[] array) {
 		if (array == null)
@@ -870,7 +868,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingQueue<Long> blockingQueue(long[] array) {
 		if (array == null)
@@ -889,7 +887,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A BlockingQueue containing the elements in array.
 	 * @see BlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static BlockingQueue<Short> blockingQueue(short[] array) {
 		if (array == null)
@@ -909,7 +907,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> Collection<E> collection(E[] array) {
 		if (array == null)
@@ -928,7 +926,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Collection<Boolean> collection(boolean[] array) {
 		if (array == null)
@@ -947,7 +945,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Collection<Byte> collection(byte[] array) {
 		if (array == null)
@@ -966,7 +964,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Collection<Character> collection(char[] array) {
 		if (array == null)
@@ -985,7 +983,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Collection<Double> collection(double[] array) {
 		if (array == null)
@@ -1004,7 +1002,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Collection<Float> collection(float[] array) {
 		if (array == null)
@@ -1023,7 +1021,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Collection<Integer> collection(int[] array) {
 		if (array == null)
@@ -1042,7 +1040,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Collection<Long> collection(long[] array) {
 		if (array == null)
@@ -1061,7 +1059,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A Collection containing the elements in array.
 	 * @see Collection
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Collection<Short> collection(short[] array) {
 		if (array == null)
@@ -1081,7 +1079,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> ConcurrentLinkedDeque<E> concurrentLinkedDeque(E[] array) {
 		if (array == null)
@@ -1100,7 +1098,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedDeque<Boolean> concurrentLinkedDeque(boolean[] array) {
 		if (array == null)
@@ -1119,7 +1117,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedDeque<Byte> concurrentLinkedDeque(byte[] array) {
 		if (array == null)
@@ -1138,7 +1136,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedDeque<Character> concurrentLinkedDeque(char[] array) {
 		if (array == null)
@@ -1157,7 +1155,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedDeque<Double> concurrentLinkedDeque(double[] array) {
 		if (array == null)
@@ -1176,7 +1174,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedDeque<Float> concurrentLinkedDeque(float[] array) {
 		if (array == null)
@@ -1195,7 +1193,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedDeque<Integer> concurrentLinkedDeque(int[] array) {
 		if (array == null)
@@ -1214,7 +1212,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedDeque<Long> concurrentLinkedDeque(long[] array) {
 		if (array == null)
@@ -1233,7 +1231,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A ConcurrentLinkedDeque containing the elements in array.
 	 * @see ConcurrentLinkedDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedDeque<Short> concurrentLinkedDeque(short[] array) {
 		if (array == null)
@@ -1253,7 +1251,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> ConcurrentLinkedQueue<E> concurrentLinkedQueue(E[] array) {
 		if (array == null)
@@ -1272,7 +1270,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedQueue<Boolean> concurrentLinkedQueue(boolean[] array) {
 		if (array == null)
@@ -1291,7 +1289,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedQueue<Byte> concurrentLinkedQueue(byte[] array) {
 		if (array == null)
@@ -1310,7 +1308,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedQueue<Character> concurrentLinkedQueue(char[] array) {
 		if (array == null)
@@ -1329,7 +1327,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedQueue<Double> concurrentLinkedQueue(double[] array) {
 		if (array == null)
@@ -1348,7 +1346,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedQueue<Float> concurrentLinkedQueue(float[] array) {
 		if (array == null)
@@ -1367,7 +1365,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedQueue<Integer> concurrentLinkedQueue(int[] array) {
 		if (array == null)
@@ -1386,7 +1384,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedQueue<Long> concurrentLinkedQueue(long[] array) {
 		if (array == null)
@@ -1405,7 +1403,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A ConcurrentLinkedQueue containing the elements in array.
 	 * @see ConcurrentLinkedQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentLinkedQueue<Short> concurrentLinkedQueue(short[] array) {
 		if (array == null)
@@ -1425,7 +1423,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> ConcurrentSkipListSet<E> concurrentSkipListSet(E[] array) {
 		if (array == null)
@@ -1444,7 +1442,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentSkipListSet<Boolean> concurrentSkipListSet(boolean[] array) {
 		if (array == null)
@@ -1463,7 +1461,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentSkipListSet<Byte> concurrentSkipListSet(byte[] array) {
 		if (array == null)
@@ -1482,7 +1480,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentSkipListSet<Character> concurrentSkipListSet(char[] array) {
 		if (array == null)
@@ -1501,7 +1499,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentSkipListSet<Double> concurrentSkipListSet(double[] array) {
 		if (array == null)
@@ -1520,7 +1518,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentSkipListSet<Float> concurrentSkipListSet(float[] array) {
 		if (array == null)
@@ -1539,7 +1537,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentSkipListSet<Integer> concurrentSkipListSet(int[] array) {
 		if (array == null)
@@ -1558,7 +1556,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentSkipListSet<Long> concurrentSkipListSet(long[] array) {
 		if (array == null)
@@ -1577,7 +1575,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A ConcurrentSkipListSet containing the elements in array.
 	 * @see ConcurrentSkipListSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ConcurrentSkipListSet<Short> concurrentSkipListSet(short[] array) {
 		if (array == null)
@@ -1597,7 +1595,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> CopyOnWriteArrayList<E> copyOnWriteArrayList(E[] array) {
 		if (array == null)
@@ -1613,7 +1611,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static CopyOnWriteArrayList<Boolean> copyOnWriteArrayList(boolean[] array) {
 		if (array == null)
@@ -1632,7 +1630,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static CopyOnWriteArrayList<Byte> copyOnWriteArrayList(byte[] array) {
 		if (array == null)
@@ -1651,7 +1649,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static CopyOnWriteArrayList<Character> copyOnWriteArrayList(char[] array) {
 		if (array == null)
@@ -1670,7 +1668,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static CopyOnWriteArrayList<Double> copyOnWriteArrayList(double[] array) {
 		if (array == null)
@@ -1689,7 +1687,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static CopyOnWriteArrayList<Float> copyOnWriteArrayList(float[] array) {
 		if (array == null)
@@ -1708,7 +1706,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static CopyOnWriteArrayList<Integer> copyOnWriteArrayList(int[] array) {
 		if (array == null)
@@ -1727,7 +1725,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static CopyOnWriteArrayList<Long> copyOnWriteArrayList(long[] array) {
 		if (array == null)
@@ -1746,7 +1744,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A CopyOnWriteArrayList containing the elements in array.
 	 * @see CopyOnWriteArrayList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static CopyOnWriteArrayList<Short> copyOnWriteArrayList(short[] array) {
 		if (array == null)
@@ -1766,7 +1764,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A DelayQueue containing the elements in array.
 	 * @see DelayQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E extends Delayed> DelayQueue<E> delayQueue(E[] array) {
 		if (array == null)
@@ -1786,7 +1784,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> Deque<E> deque(E[] array) {
 		if (array == null)
@@ -1805,7 +1803,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Deque<Boolean> deque(boolean[] array) {
 		if (array == null)
@@ -1824,7 +1822,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Deque<Byte> deque(byte[] array) {
 		if (array == null)
@@ -1843,7 +1841,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Deque<Character> deque(char[] array) {
 		if (array == null)
@@ -1862,7 +1860,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Deque<Double> deque(double[] array) {
 		if (array == null)
@@ -1881,7 +1879,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Deque<Float> deque(float[] array) {
 		if (array == null)
@@ -1900,7 +1898,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Deque<Integer> deque(int[] array) {
 		if (array == null)
@@ -1919,7 +1917,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Deque<Long> deque(long[] array) {
 		if (array == null)
@@ -1938,7 +1936,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A Deque containing the elements in array.
 	 * @see Deque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Deque<Short> deque(short[] array) {
 		if (array == null)
@@ -1959,7 +1957,7 @@ public class ArrayInto {
 	 * @return A EnumSet containing the elements in array.
 	 * @see Enum
 	 * @see EnumSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E extends Enum<E>> EnumSet<E> enumSet(E[] array) {
 		if (array == null)
@@ -1976,7 +1974,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> HashSet<E> hashSet(E[] array) {
 		if (array == null)
@@ -1995,7 +1993,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static HashSet<Boolean> hashSet(boolean[] array) {
 		if (array == null)
@@ -2014,7 +2012,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static HashSet<Byte> hashSet(byte[] array) {
 		if (array == null)
@@ -2033,7 +2031,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static HashSet<Character> hashSet(char[] array) {
 		if (array == null)
@@ -2052,7 +2050,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static HashSet<Double> hashSet(double[] array) {
 		if (array == null)
@@ -2071,7 +2069,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static HashSet<Float> hashSet(float[] array) {
 		if (array == null)
@@ -2090,7 +2088,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static HashSet<Integer> hashSet(int[] array) {
 		if (array == null)
@@ -2109,7 +2107,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static HashSet<Long> hashSet(long[] array) {
 		if (array == null)
@@ -2128,7 +2126,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A HashSet containing the elements in array.
 	 * @see HashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static HashSet<Short> hashSet(short[] array) {
 		if (array == null)
@@ -2148,7 +2146,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> LinkedBlockingDeque<E> linkedBlockingDeque(E[] array) {
 		if (array == null)
@@ -2167,7 +2165,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedBlockingDeque<Boolean> linkedBlockingDeque(boolean[] array) {
 		if (array == null)
@@ -2186,7 +2184,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedBlockingDeque<Byte> linkedBlockingDeque(byte[] array) {
 		if (array == null)
@@ -2205,7 +2203,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedBlockingDeque<Character> linkedBlockingDeque(char[] array) {
 		if (array == null)
@@ -2224,7 +2222,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedBlockingDeque<Double> linkedBlockingDeque(double[] array) {
 		if (array == null)
@@ -2243,7 +2241,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedBlockingDeque<Float> linkedBlockingDeque(float[] array) {
 		if (array == null)
@@ -2262,7 +2260,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedBlockingDeque<Integer> linkedBlockingDeque(int[] array) {
 		if (array == null)
@@ -2281,7 +2279,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedBlockingDeque<Long> linkedBlockingDeque(long[] array) {
 		if (array == null)
@@ -2300,7 +2298,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A LinkedBlockingDeque containing the elements in array.
 	 * @see LinkedBlockingDeque
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedBlockingDeque<Short> linkedBlockingDeque(short[] array) {
 		if (array == null)
@@ -2320,7 +2318,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> LinkedHashSet<E> linkedHashSet(E[] array) {
 		if (array == null)
@@ -2339,7 +2337,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedHashSet<Boolean> linkedHashSet(boolean[] array) {
 		if (array == null)
@@ -2358,7 +2356,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedHashSet<Byte> linkedHashSet(byte[] array) {
 		if (array == null)
@@ -2377,7 +2375,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedHashSet<Character> linkedHashSet(char[] array) {
 		if (array == null)
@@ -2396,7 +2394,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedHashSet<Double> linkedHashSet(double[] array) {
 		if (array == null)
@@ -2415,7 +2413,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedHashSet<Float> linkedHashSet(float[] array) {
 		if (array == null)
@@ -2434,7 +2432,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedHashSet<Integer> linkedHashSet(int[] array) {
 		if (array == null)
@@ -2453,7 +2451,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedHashSet<Long> linkedHashSet(long[] array) {
 		if (array == null)
@@ -2472,7 +2470,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A LinkedHashSet containing the elements in array.
 	 * @see LinkedHashSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedHashSet<Short> linkedHashSet(short[] array) {
 		if (array == null)
@@ -2492,7 +2490,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> LinkedList<E> linkedList(E[] array) {
 		if (array == null)
@@ -2511,7 +2509,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedList<Boolean> linkedList(boolean[] array) {
 		if (array == null)
@@ -2530,7 +2528,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedList<Byte> linkedList(byte[] array) {
 		if (array == null)
@@ -2549,7 +2547,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedList<Character> linkedList(char[] array) {
 		if (array == null)
@@ -2568,7 +2566,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedList<Double> linkedList(double[] array) {
 		if (array == null)
@@ -2587,7 +2585,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedList<Float> linkedList(float[] array) {
 		if (array == null)
@@ -2606,7 +2604,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedList<Integer> linkedList(int[] array) {
 		if (array == null)
@@ -2625,7 +2623,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedList<Long> linkedList(long[] array) {
 		if (array == null)
@@ -2644,7 +2642,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A LinkedList containing the elements in array.
 	 * @see LinkedList
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedList<Short> linkedList(short[] array) {
 		if (array == null)
@@ -2664,7 +2662,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> LinkedTransferQueue<E> linkedTransferQueue(E[] array) {
 		if (array == null)
@@ -2683,7 +2681,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedTransferQueue<Boolean> linkedTransferQueue(boolean[] array) {
 		if (array == null)
@@ -2702,7 +2700,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedTransferQueue<Byte> linkedTransferQueue(byte[] array) {
 		if (array == null)
@@ -2721,7 +2719,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedTransferQueue<Character> linkedTransferQueue(char[] array) {
 		if (array == null)
@@ -2740,7 +2738,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedTransferQueue<Double> linkedTransferQueue(double[] array) {
 		if (array == null)
@@ -2759,7 +2757,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedTransferQueue<Float> linkedTransferQueue(float[] array) {
 		if (array == null)
@@ -2778,7 +2776,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedTransferQueue<Integer> linkedTransferQueue(int[] array) {
 		if (array == null)
@@ -2797,7 +2795,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedTransferQueue<Long> linkedTransferQueue(long[] array) {
 		if (array == null)
@@ -2816,7 +2814,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A LinkedTransferQueue containing the elements in array.
 	 * @see LinkedTransferQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static LinkedTransferQueue<Short> linkedTransferQueue(short[] array) {
 		if (array == null)
@@ -2836,7 +2834,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> List<E> list(E[] array) {
 		if (array == null)
@@ -2855,7 +2853,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static List<Boolean> list(boolean[] array) {
 		if (array == null)
@@ -2874,7 +2872,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static List<Byte> list(byte[] array) {
 		if (array == null)
@@ -2893,7 +2891,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static List<Character> list(char[] array) {
 		if (array == null)
@@ -2912,7 +2910,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static List<Double> list(double[] array) {
 		if (array == null)
@@ -2931,7 +2929,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static List<Float> list(float[] array) {
 		if (array == null)
@@ -2950,7 +2948,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static List<Integer> list(int[] array) {
 		if (array == null)
@@ -2969,7 +2967,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static List<Long> list(long[] array) {
 		if (array == null)
@@ -2988,7 +2986,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A List containing the elements in array.
 	 * @see List
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static List<Short> list(short[] array) {
 		if (array == null)
@@ -3008,7 +3006,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> PriorityBlockingQueue<E> priorityBlockingQueue(E[] array) {
 		if (array == null)
@@ -3027,7 +3025,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityBlockingQueue<Boolean> priorityBlockingQueue(boolean[] array) {
 		if (array == null)
@@ -3046,7 +3044,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityBlockingQueue<Byte> priorityBlockingQueue(byte[] array) {
 		if (array == null)
@@ -3065,7 +3063,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityBlockingQueue<Character> priorityBlockingQueue(char[] array) {
 		if (array == null)
@@ -3084,7 +3082,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityBlockingQueue<Double> priorityBlockingQueue(double[] array) {
 		if (array == null)
@@ -3103,7 +3101,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityBlockingQueue<Float> priorityBlockingQueue(float[] array) {
 		if (array == null)
@@ -3122,7 +3120,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityBlockingQueue<Integer> priorityBlockingQueue(int[] array) {
 		if (array == null)
@@ -3141,7 +3139,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityBlockingQueue<Long> priorityBlockingQueue(long[] array) {
 		if (array == null)
@@ -3160,7 +3158,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A PriorityBlockingQueue containing the elements in array.
 	 * @see PriorityBlockingQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityBlockingQueue<Short> priorityBlockingQueue(short[] array) {
 		if (array == null)
@@ -3180,7 +3178,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> PriorityQueue<E> priorityQueue(E[] array) {
 		if (array == null)
@@ -3199,7 +3197,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityQueue<Boolean> priorityQueue(boolean[] array) {
 		if (array == null)
@@ -3218,7 +3216,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityQueue<Byte> priorityQueue(byte[] array) {
 		if (array == null)
@@ -3237,7 +3235,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityQueue<Character> priorityQueue(char[] array) {
 		if (array == null)
@@ -3256,7 +3254,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityQueue<Double> priorityQueue(double[] array) {
 		if (array == null)
@@ -3275,7 +3273,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityQueue<Float> priorityQueue(float[] array) {
 		if (array == null)
@@ -3294,7 +3292,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityQueue<Integer> priorityQueue(int[] array) {
 		if (array == null)
@@ -3313,7 +3311,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityQueue<Long> priorityQueue(long[] array) {
 		if (array == null)
@@ -3332,7 +3330,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A PriorityQueue containing the elements in array.
 	 * @see PriorityQueue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static PriorityQueue<Short> priorityQueue(short[] array) {
 		if (array == null)
@@ -3352,7 +3350,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> Queue<E> queue(E[] array) {
 		if (array == null)
@@ -3371,7 +3369,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Queue<Boolean> queue(boolean[] array) {
 		if (array == null)
@@ -3390,7 +3388,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Queue<Byte> queue(byte[] array) {
 		if (array == null)
@@ -3409,7 +3407,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Queue<Character> queue(char[] array) {
 		if (array == null)
@@ -3428,7 +3426,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Queue<Double> queue(double[] array) {
 		if (array == null)
@@ -3447,7 +3445,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Queue<Float> queue(float[] array) {
 		if (array == null)
@@ -3466,7 +3464,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Queue<Integer> queue(int[] array) {
 		if (array == null)
@@ -3485,7 +3483,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Queue<Long> queue(long[] array) {
 		if (array == null)
@@ -3504,7 +3502,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A Queue containing the elements in array.
 	 * @see Queue
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Queue<Short> queue(short[] array) {
 		if (array == null)
@@ -3524,7 +3522,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> Set<E> set(E[] array) {
 		if (array == null)
@@ -3543,7 +3541,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Set<Boolean> set(boolean[] array) {
 		if (array == null)
@@ -3562,7 +3560,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Set<Byte> set(byte[] array) {
 		if (array == null)
@@ -3581,7 +3579,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Set<Character> set(char[] array) {
 		if (array == null)
@@ -3600,7 +3598,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Set<Double> set(double[] array) {
 		if (array == null)
@@ -3619,7 +3617,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Set<Float> set(float[] array) {
 		if (array == null)
@@ -3638,7 +3636,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Set<Integer> set(int[] array) {
 		if (array == null)
@@ -3657,7 +3655,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Set<Long> set(long[] array) {
 		if (array == null)
@@ -3676,7 +3674,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A Set containing the elements in array.
 	 * @see Set
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static Set<Short> set(short[] array) {
 		if (array == null)
@@ -3696,7 +3694,7 @@ public class ArrayInto {
 	 * @param array The array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static <E> TreeSet<E> treeSet(E[] array) {
 		if (array == null)
@@ -3715,7 +3713,7 @@ public class ArrayInto {
 	 * @param array The boolean array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static TreeSet<Boolean> treeSet(boolean[] array) {
 		if (array == null)
@@ -3734,7 +3732,7 @@ public class ArrayInto {
 	 * @param array The byte array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static TreeSet<Byte> treeSet(byte[] array) {
 		if (array == null)
@@ -3753,7 +3751,7 @@ public class ArrayInto {
 	 * @param array The char array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static TreeSet<Character> treeSet(char[] array) {
 		if (array == null)
@@ -3772,7 +3770,7 @@ public class ArrayInto {
 	 * @param array The double array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static TreeSet<Double> treeSet(double[] array) {
 		if (array == null)
@@ -3791,7 +3789,7 @@ public class ArrayInto {
 	 * @param array The float array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static TreeSet<Float> treeSet(float[] array) {
 		if (array == null)
@@ -3810,7 +3808,7 @@ public class ArrayInto {
 	 * @param array The int array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static TreeSet<Integer> treeSet(int[] array) {
 		if (array == null)
@@ -3829,7 +3827,7 @@ public class ArrayInto {
 	 * @param array The long array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static TreeSet<Long> treeSet(long[] array) {
 		if (array == null)
@@ -3848,7 +3846,7 @@ public class ArrayInto {
 	 * @param array The short array of elements to convert.
 	 * @return A TreeSet containing the elements in array.
 	 * @see TreeSet
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static TreeSet<Short> treeSet(short[] array) {
 		if (array == null)

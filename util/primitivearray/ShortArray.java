@@ -9,14 +9,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * ShortArray class is a wrapper for a primitive short array. This class provides
- * convenience methods for performing array operations and manipulations. ShortArray
- * implements PrimitiveArray and is thread-safe.
+ * ShortArray class is a wrapper for a primitive short array. This class provides convenience methods for performing 
+ * array operations and manipulations. ShortArray implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @see PrimitiveArray
- * @since 21
+ * @since JDK-21
  */
 public class ShortArray implements PrimitiveArray {
 	
@@ -39,11 +38,10 @@ public class ShortArray implements PrimitiveArray {
 	private short[] arr;
 	
 	/**
-	 * Constructor that creates a ShortArray with the specified size will all elements 
-	 * set to 0.
+	 * Constructor that creates a ShortArray with the specified size will all elements set to 0.
 	 * @param size The size of this ShortArray.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public ShortArray(int size) {
 		if (size < 0)
@@ -56,7 +54,7 @@ public class ShortArray implements PrimitiveArray {
 	 * Constructor that creates a ShortArray from the specified short array.
 	 * @param array The short array to use.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public ShortArray(short[] array) {
 		if (array == null)
@@ -148,10 +146,9 @@ public class ShortArray implements PrimitiveArray {
 	 * Converts a byte array into a ShortArray.
 	 * @param array The byte array to convert.
 	 * @return A ShortArray containing the byte array.
-	 * @throws IllegalArgumentException Thrown if array's length is not evenly 
-	 * divisible by {@link Short#BYTES}.
+	 * @throws IllegalArgumentException Thrown if array's length is not evenly divisible by {@link Short#BYTES}.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ShortArray from(byte[] array) 
 			throws NullPointerException {
@@ -300,7 +297,7 @@ public class ShortArray implements PrimitiveArray {
 	/**
 	 * Returns a copy of the short array backing this ShortArray.
 	 * @return A copy of the short array.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public short[] toArray() {
 		short[] copy = new short[arr.length];

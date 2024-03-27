@@ -9,17 +9,16 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * SortedArray class is an array that is automatically sorted when elements are added. 
- * All other methods perform their standard operations since it will not affect the 
- * order of the elements. SortedArrays are not resizable. SortedArray implements Block 
- * and is thread-safe.
+ * SortedArray class is an array that is automatically sorted when elements are added. All other methods perform 
+ * their standard operations since it will not affect the order of the elements. SortedArrays are not resizable. 
+ * SortedArray implements Block and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @param <E> The Comparable element type.
  * @see Block
  * @see Comparable
- * @since 21
+ * @since JDK-21
  */
 public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	
@@ -50,17 +49,16 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	 */
 	protected Object[] arr;
 	/**
-	 * Flag specifying the sorting order where true = ascending and false =
-	 * descending.
+	 * Flag specifying the sorting order where true = ascending and false = descending.
 	 */
 	private boolean order;
 
 	/**
-	 * Constructor that creates a SortedArray with the specified size will all elements 
-	 * set to null. The sorting order is defaulted to ascending.
+	 * Constructor that creates a SortedArray with the specified size will all elements set to null. The sorting 
+	 * order is defaulted to ascending.
 	 * @param size The size of this Array.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public SortedArray(int size) 
 			throws NegativeArraySizeException {
@@ -76,10 +74,9 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Constructor that creates an Array with the same elements as the specified array
-	 * and automatically sorts them.
+	 * Constructor that creates an Array with the same elements as the specified array and automatically sorts them.
 	 * @param arr The array to store into this.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public SortedArray(E[] arr) {
 		this.arr = new Object[arr.length];
@@ -87,12 +84,12 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Constructor that creates a SortedArray with the specified size will all elements 
-	 * set to null. The sorting order is set to the specified sorting order.
+	 * Constructor that creates a SortedArray with the specified size will all elements set to null. The sorting 
+	 * order is set to the specified sorting order.
 	 * @param size The size of this Array.
 	 * @param order The sorting order.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public SortedArray(int size, boolean order) 
 			throws NegativeArraySizeException {
@@ -108,13 +105,12 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Replaces the a null element with the specified element and then sorts this 
-	 * SortedArray. If no null elements exist, this returns false. Adding a null element 
-	 * throws an exception.
+	 * Replaces the a null element with the specified element and then sorts this SortedArray. If no null elements 
+	 * exist, this returns false. Adding a null element throws an exception.
 	 * @param e The element to add.
 	 * @return True if e is added, otherwise false.
 	 * @throws NullPointerException Thrown if e is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -150,13 +146,12 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Replaces null elements with the elements in the specified Collection. Any null
-	 * elements in the specified Collection will cause an exception to be thrown. Added
-	 * elements are automatically sorted.
+	 * Replaces null elements with the elements in the specified Collection. Any null elements in the specified 
+	 * Collection will cause an exception to be thrown. Added elements are automatically sorted.
 	 * @param c The Collection to add.
 	 * @return True if elements were added, otherwise false.
 	 * @throw NullPointerException Thrown if any element in c is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -200,7 +195,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	
 	/**
 	 * Replaces all elements with null values. The size of the Array does not change.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public void clear() {
@@ -343,7 +338,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	/**
 	 * Returns true if all elements in this Array are null.
 	 * @return True if all elements are null, otherwise false.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -368,8 +363,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Creates a new SortedArray by joining the two specified arrays and automatically
-	 * sorts the joined array.
+	 * Creates a new SortedArray by joining the two specified arrays and automatically sorts the joined array.
 	 * @param <E> The Comparable element type.
 	 * @param arr1 The first array.
 	 * @param arr2 The second array.
@@ -405,7 +399,7 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	/**
 	 * Returns the sorting order of this SortedArray.
 	 * @return The sorting order.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public boolean order() {
 		readLock.lock();
@@ -419,13 +413,12 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Removes the element at the specified index by shifting all the following 
-	 * elements, overwriting the element to remove, and setting the last element 
-	 * to null.
+	 * Removes the element at the specified index by shifting all the following elements, overwriting the element to 
+	 * remove, and setting the last element to null.
 	 * @param index The index of the element to remove.
 	 * @return The removed element.
 	 * @throws ArrayIndexOutOfBoundsException Thrown if index is out-of-bounds.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -453,12 +446,11 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Removes the first occurrence of the specified Object by shifting all the
-	 * following elements, overwriting the element to remove, and setting the last
-	 * element to null.
+	 * Removes the first occurrence of the specified Object by shifting all the following elements, overwriting the 
+	 * element to remove, and setting the last element to null.
 	 * @param o The Object to remove.
 	 * @return True if o was removed, otherwise false.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean remove(Object o) {
@@ -486,11 +478,10 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 
 	/**
-	 * Removes any elements that are contained within the specified Collection by
-	 * setting those elements to null.
+	 * Removes any elements that are contained within the specified Collection by setting those elements to null.
 	 * @param c The Collection to remove.
 	 * @return True if elements were removed, otherwise false.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean removeAll(Collection<?> c) {
@@ -532,12 +523,11 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Removes the last occurrence of the specified Object by shifting all the
-	 * following elements, overwriting the element to remove, and setting the last
-	 * element to null.
+	 * Removes the last occurrence of the specified Object by shifting all the following elements, overwriting the 
+	 * element to remove, and setting the last element to null.
 	 * @param o The Object to remove.
 	 * @return True if o was removed, otherwise false.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public boolean removeLast(Object o) {
@@ -587,8 +577,8 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	
 	/**
 	 * Reverses the order of this SortedArray.
-	 * @returns A SortedArray containing this SortedArray in reverse order.
-	 * @since 21
+	 * @return A SortedArray containing this SortedArray in reverse order.
+	 * @since JDK-21
 	 */
 	@SuppressWarnings("unchecked")
 	public SortedArray<E> reverse() {
@@ -608,10 +598,9 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Returns the size of this Array which is the maximum number of elements this
-	 * Array can hold.
+	 * Returns the size of this Array which is the maximum number of elements this Array can hold.
 	 * @returns The maximum number of elements this Array can hold.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	@Override
 	public int size() {
@@ -664,16 +653,14 @@ public class SortedArray<E extends Comparable<E>> implements Block<E> {
 	}
 	
 	/**
-	 * Creates a sub-array from this SortedArray containing elements from [start, 
-	 * end). Since this SortedArray is already sorted, the returned SortedArray
-	 * will automatically be sorted as well.
+	 * Creates a sub-array from this SortedArray containing elements from [start, end). Since this SortedArray is 
+	 * already sorted, the returned SortedArray will automatically be sorted as well.
 	 * @param start The index to start at (included).
 	 * @param end The index to stop at (excluded).
 	 * @return A SortedArray containing elements of this from [start, end).
-	 * @throws IllegalArgumentException Thrown if start is negative or if end is
-	 * greater than {@link #sizeUsed()} or if start is greater than or equal to
-	 * end.
-	 * @since 21
+	 * @throws IllegalArgumentException Thrown if start is negative or if end is greater than {@link #sizeUsed()} or 
+	 * if start is greater than or equal to end.
+	 * @since JDK-21
 	 */
 	@Override
 	public SortedArray<E> subBlock(int start, int end) 

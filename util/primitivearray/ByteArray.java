@@ -9,14 +9,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import babs.mindforge.util.ArrayInto;
 
 /**
- * ByteArray class is a wrapper for a primitive byte array. This class provides
- * convenience methods for performing array operations and manipulations. ByteArray
- * implements PrimitiveArray and is thread-safe.
+ * ByteArray class is a wrapper for a primitive byte array. This class provides convenience methods for performing 
+ * array operations and manipulations. ByteArray implements PrimitiveArray and is thread-safe.
  * 
  * @author Monroe Gordon
- * @version 0.1.2
+ * @version 0.0.0
  * @see PrimitiveArray
- * @since 21
+ * @since JDK-21
  */
 public class ByteArray implements PrimitiveArray {
 	
@@ -39,11 +38,10 @@ public class ByteArray implements PrimitiveArray {
 	private byte[] arr;
 	
 	/**
-	 * Constructor that creates a ByteArray with the specified size will all elements 
-	 * set to 0.
+	 * Constructor that creates a ByteArray with the specified size will all elements set to 0.
 	 * @param size The size of this ByteArray.
 	 * @throws NegativeArraySizeException Thrown if size is negative.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public ByteArray(int size) {
 		if (size < 0)
@@ -56,7 +54,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Constructor that creates a ByteArray from the specified byte array.
 	 * @param array The byte array to use.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public ByteArray(byte[] array) {
 		if (array == null)
@@ -148,7 +146,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Converts a boolean value into a ByteArray.
 	 * @param value The boolean value to convert.
 	 * @return A ByteArray containing the boolean value.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(boolean value) {
 		ByteArray ret = new ByteArray(Byte.BYTES);
@@ -161,7 +159,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param array The boolean array to convert.
 	 * @return A ByteArray containing the boolean array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(boolean[] array) 
 			throws NullPointerException {
@@ -177,7 +175,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Converts a byte value into a ByteArray.
 	 * @param value The byte value to convert.
 	 * @return A ByteArray containing the byte value.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(byte value) {
 		ByteArray ret = new ByteArray(Byte.BYTES);
@@ -190,7 +188,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param array The byte array to convert.
 	 * @return A ByteArray containing the byte array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(byte[] array) 
 			throws NullPointerException {
@@ -206,7 +204,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Converts a char value into a ByteArray.
 	 * @param value The char value to convert.
 	 * @return A ByteArray containing the char value.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(char value) {
 		ByteArray ret = new ByteArray(Character.BYTES);
@@ -221,7 +219,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param array The char array to convert.
 	 * @return A ByteArray containing the char array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(char[] array) 
 			throws NullPointerException {
@@ -242,7 +240,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Converts a double value into a ByteArray.
 	 * @param value The double value to convert.
 	 * @return A ByteArray containing the double value.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(double value) {
 		ByteArray ret = new ByteArray(Double.BYTES);
@@ -258,7 +256,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param array The double array to convert.
 	 * @return A ByteArray containing the double array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(double[] array) 
 			throws NullPointerException {
@@ -278,7 +276,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Converts a float value into a ByteArray.
 	 * @param value The float value to convert.
 	 * @return A ByteArray containing the float value.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(float value) {
 		ByteArray ret = new ByteArray(Float.BYTES);
@@ -294,7 +292,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param array The float array to convert.
 	 * @return A ByteArray containing the float array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(float[] array) 
 			throws NullPointerException {
@@ -314,7 +312,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Converts an int value into a ByteArray.
 	 * @param value The int value to convert.
 	 * @return A ByteArray containing the int value.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(int value) {
 		ByteArray ret = new ByteArray(Integer.BYTES);
@@ -329,7 +327,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param array The int array to convert.
 	 * @return A ByteArray containing the int array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(int[] array) 
 			throws NullPointerException {
@@ -348,7 +346,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Converts a long value into a ByteArray.
 	 * @param value The long value to convert.
 	 * @return A ByteArray containing the long value.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(long value) {
 		ByteArray ret = new ByteArray(Long.BYTES);
@@ -363,7 +361,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param array The long array to convert.
 	 * @return A ByteArray containing the long array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(long[] array) 
 			throws NullPointerException {
@@ -382,7 +380,7 @@ public class ByteArray implements PrimitiveArray {
 	 * Converts a short value into a ByteArray.
 	 * @param value The short value to convert.
 	 * @return A ByteArray containing the short value.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(short value) {
 		ByteArray ret = new ByteArray(Short.BYTES);
@@ -397,7 +395,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param array The short array to convert.
 	 * @return A ByteArray containing the short array.
 	 * @throws NullPointerException Thrown if array is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(short[] array) 
 			throws NullPointerException {
@@ -417,7 +415,7 @@ public class ByteArray implements PrimitiveArray {
 	 * @param str The String to convert.
 	 * @return A ByteArray containing the String.
 	 * @throws NullPointerException Thrown if str is null.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public static ByteArray from(String str) 
 			throws NullPointerException {
@@ -558,7 +556,7 @@ public class ByteArray implements PrimitiveArray {
 	/**
 	 * Returns a copy of the byte array backing this ByteArray.
 	 * @return A copy of the byte array.
-	 * @since 21
+	 * @since JDK-21
 	 */
 	public byte[] toArray() {
 		byte[] copy = new byte[arr.length];
