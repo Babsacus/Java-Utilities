@@ -1,4 +1,4 @@
-# Java-Utilities v0.1.2
+# Java-Utilities
 A collection of Java utility classes developed to simplify common operations.
 These utilities are part of our new Mindforge library.
 
